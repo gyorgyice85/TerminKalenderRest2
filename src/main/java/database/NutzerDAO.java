@@ -29,7 +29,7 @@ public class NutzerDAO {
     public List<Nutzer> findByName(String vorname, String nachname) {
         List<Nutzer> list = new ArrayList<Nutzer>();
         Connection c = null;
-        String sql = "SELECT * FROM Nutzer WHERE Vorname = ? AND Nachname = ?";
+        String sql = "SELECT * FROM Nutzer WHERE Vorname LIKE ? AND Nachname LIKE ?";
         try {
             c = ConnectionHelper.getConnection();
             // prepareStatement creates a PreparedStatement object for sending

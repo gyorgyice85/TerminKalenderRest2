@@ -29,7 +29,7 @@ public class TerminDAO {
     public List<Termin> findByBeschreibung(String beschreibung) {
         List<Termin> list = new ArrayList<Termin>();
         Connection c = null;
-        String sql = "SELECT * FROM Termin WHERE Beschreibung = ?";
+        String sql = "SELECT * FROM Termin WHERE Beschreibung LIKE ?";
         try {
             c = ConnectionHelper.getConnection();
             // prepareStatement creates a PreparedStatement object for sending
