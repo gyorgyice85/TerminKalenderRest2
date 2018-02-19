@@ -18,4 +18,16 @@ public class TestNutzerDAO {
             System.out.println(p);
         }
     }
+
+    @Test
+    public void testFindByName() {
+        for (Nutzer p : personDAO.findByName("Gyorgyi", "Palatinus")) {
+            System.out.println(p);
+        }
+    }
+
+    @Test
+    public void findByID() {
+        System.out.println(personDAO.findById(1234));
+    }
 }

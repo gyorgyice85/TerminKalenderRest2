@@ -29,13 +29,13 @@ public class TerminDAO {
     public List<Termin> findByBeschreibung(String beschreibung) {
         List<Termin> list = new ArrayList<Termin>();
         Connection c = null;
-        String sql = "SELECT * FROM Termin WHERE Beschreibung LIKE ?";
+        String sql = "SELECT * FROM Termin WHERE Beschreibung LIKE '%'|| ? || '%'";
         try {
             c = ConnectionHelper.getConnection();
             // prepareStatement creates a PreparedStatement object for sending
             // parameterized SQL statements to the database.
             PreparedStatement ps = c.prepareStatement(sql);
-            ps.setString(1, "'%" + beschreibung + "%'");
+            ps.setString(1, beschreibung);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(processRow(rs));

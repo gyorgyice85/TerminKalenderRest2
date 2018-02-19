@@ -18,4 +18,11 @@ public class TestTerminDAO {
             System.out.println(t);
         }
     }
+
+    @Test
+    public void testFindByBeschreibung() {
+        for (Termin t : terminDAO.findByBeschreibung("MUSTER")) {
+            System.out.println(t);
+        }
+    }
 }

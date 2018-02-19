@@ -29,14 +29,16 @@ public class NutzerDAO {
     public List<Nutzer> findByName(String vorname, String nachname) {
         List<Nutzer> list = new ArrayList<Nutzer>();
         Connection c = null;
-        String sql = "SELECT * FROM Nutzer WHERE Vorname LIKE ? AND Nachname LIKE ?";
+        String sql = "SELECT * FROM Nutzer " +
+                "WHERE Vorname LIKE '%'|| ? || '%'" +
+                " AND Nachname LIKE '%'|| ? || '%'";
         try {
             c = ConnectionHelper.getConnection();
             // prepareStatement creates a PreparedStatement object for sending
             // parameterized SQL statements to the database.
             PreparedStatement ps = c.prepareStatement(sql);
-            ps.setString(1, "'%" + vorname + "%'");
-            ps.setString(2,"'%" + nachname + "%'");
+            ps.setString(1, vorname);
+            ps.setString(2, nachname);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(processRow(rs));
