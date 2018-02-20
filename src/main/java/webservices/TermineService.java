@@ -34,22 +34,26 @@ public class TermineService {
         return terminDAO.create(termin);
     }
 
-//    @GET      // TODO: zusammenfuegen mit findAll() Methode oben
-//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//    public List<Termin> findByBeschreibung(@QueryParam("beschreibung") String beschreibung) {
-//        return terminDAO.findByBeschreibung(beschreibung);
-//    }
+    @GET
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<Termin> findByBeschreibung(@QueryParam("beschreibung") String beschreibung) {
+               if (beschreibung == null) {
+            return terminDAO.findAll();
+        } else {
+            return terminDAO.findByBeschreibung(beschreibung);
+        }
+    }
 
 
     @GET
-    @Path("{id}")
+    @Path("{terminId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Termin findById(@PathParam("id") int id) {
-        return terminDAO.findById(id);
+    public Termin findById(@PathParam("terminId") int terminId) {
+        return terminDAO.findById(terminId);
     }
 
     @PUT
-    @Path("{id}")
+    @Path("{terminId}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Termin update(Termin termin) {
@@ -58,25 +62,25 @@ public class TermineService {
 
 
     @DELETE
-    @Path("{id}")
+    @Path("{terminId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public boolean remove(@PathParam("id") int id) {
-        return terminDAO.remove(id);
+    public boolean remove(@PathParam("terminId") int terminId) {
+        return terminDAO.remove(terminId);
     }
 
 
-//    @GET
-//    @Path("{id}")   // TODO
-//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//    public List<Nutzer> getTeilnehmer(@PathParam("id") int id) {
-//        return teilnehmerDAO.getTeilnehmer(id);
-//    }
+    @GET
+    @Path("{terminId}/teilnehmer")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<Nutzer> getTeilnehmer(@PathParam("terminId") int terminId) {
+        return teilnehmerDAO.getTeilnehmer(terminId);
+    }
 
-//    @POST
-//    @Path("{id}")    // TODO
-//    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//    public void createTeilnehmer(@PathParam("id") int id) {
-//        return teilnehmerDAO.create(nutzer, id);
-//    }
+    @POST
+    @Path("{terminId}/teilnehmer")    // TODO
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public void createTeilnehmer(@PathParam("terminId") int terminId) {
+        return teilnehmerDAO.create(nutzerId, terminId);
+    }
 }

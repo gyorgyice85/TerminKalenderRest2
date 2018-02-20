@@ -20,11 +20,6 @@ public class NutzerService {
         teilnehmerDAO = new TeilnehmerDAO();
     }
 
-//    @GET
-//    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-//    public List<Nutzer> findAll() {
-//        return nutzerDAO.findAll();
-//    }
 
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -39,7 +34,7 @@ public class NutzerService {
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Nutzer create(Nutzer nutzer) {
+    public Nutzer createNutzer(Nutzer nutzer) {
         return nutzerDAO.create(nutzer);
     }
 
@@ -51,11 +46,11 @@ public class NutzerService {
     }
 
     @PUT
-    @Path("{id}")   // TODO nem kell?
+    @Path("{nutzerID}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Nutzer update(Nutzer nutzer) {
-        return nutzerDAO.update(nutzer);
+    public Nutzer updateNutzer(Nutzer nutzer) {
+       return nutzerDAO.update(nutzer);
     }
 
     @DELETE
