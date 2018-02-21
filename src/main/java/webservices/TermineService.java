@@ -13,19 +13,16 @@ public class TermineService {
 
     TerminDAO terminDAO;
     TeilnehmerDAO teilnehmerDAO;
+    EinladungDAO einladungDAO;
 
 
     public TermineService() {
         terminDAO = new TerminDAO();
         teilnehmerDAO = new TeilnehmerDAO();
+        einladungDAO = new EinladungDAO();
 
     }
 
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Termin> findAll() {
-        return terminDAO.findAll();
-    }
 
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -37,7 +34,7 @@ public class TermineService {
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Termin> findByBeschreibung(@QueryParam("beschreibung") String beschreibung) {
-               if (beschreibung == null) {
+        if (beschreibung == null) {
             return terminDAO.findAll();
         } else {
             return terminDAO.findByBeschreibung(beschreibung);
@@ -77,10 +74,49 @@ public class TermineService {
     }
 
     @POST
-    @Path("{terminId}/teilnehmer")    // TODO
+    @Path("{terminId}/teilnehmer")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public void createTeilnehmer(@PathParam("terminId") int terminId) {
-        return teilnehmerDAO.create(nutzerId, terminId);
+    public void createTeilnehmer(Nutzer nutzer, @PathParam("terminId") int terminId) {
+        teilnehmerDAO.create(nutzer.getId(), terminId);
     }
+
+    @DELETE
+    @Path("{terminId}/teilnehmer")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public boolean removeTeilnehmer(Nutzer nutzer, @PathParam("terminId") int terminId) {
+        return teilnehmerDAO.remove(nutzer.getId(), terminId);
+    }
+
+    @GET
+    @Path("{terminId}/eingeladene")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public List<Nutzer> getEingeladene(@PathParam("terminId") int terminId) {
+        return einladungDAO.getEingeladene(terminId);
+    }
+
+
+    @POST
+    @Path("{terminId}/eingeladene")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public void createEingeladene(Nutzer nutzer, @PathParam("terminId") int terminId) {
+        einladungDAO.annehmen(nutzer.getId(), terminId);
+    }
+
+    @DELETE
+    @Path("{terminId}/eingeladene")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public void removeEingeladene(Nutzer nutzer, @PathParam("terminId") int terminId) {
+         einladungDAO.ablehnen(nutzer.getId(), terminId);
+    }
+
+    @POST
+    @Path("{terminId}/einladung")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public void createEinladung(Nutzer wer, Nutzer wen, @PathParam("terminId") int terminId) {
+        einladungDAO.create(wer.getId(), wen.getId(), terminId);
+    }
+
 }
