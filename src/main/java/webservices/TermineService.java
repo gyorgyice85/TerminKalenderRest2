@@ -23,7 +23,7 @@ public class TermineService {
 
     }
 
-
+    //Erstellt einen Termin
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -31,6 +31,8 @@ public class TermineService {
         return terminDAO.create(termin);
     }
 
+    //Gibt den Termin nach einer Beschreibung an.
+    //Wenn keinen Termin gefunden wurde, listet es alle Termine aus
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Termin> findByBeschreibung(@QueryParam("beschreibung") String beschreibung) {
@@ -41,7 +43,7 @@ public class TermineService {
         }
     }
 
-
+    //Gibt den Termin nach dem ID an
     @GET
     @Path("{terminId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -49,6 +51,7 @@ public class TermineService {
         return terminDAO.findById(terminId);
     }
 
+    //Es ändert den Termin
     @PUT
     @Path("{terminId}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -57,7 +60,7 @@ public class TermineService {
         return terminDAO.update(termin);
     }
 
-
+    // Löscht den Termin
     @DELETE
     @Path("{terminId}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -65,7 +68,7 @@ public class TermineService {
         return terminDAO.remove(terminId);
     }
 
-
+    //Listet die Teilnehmer des Termins
     @GET
     @Path("{terminId}/teilnehmer")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -73,6 +76,7 @@ public class TermineService {
         return teilnehmerDAO.getTeilnehmer(terminId);
     }
 
+    //Erstellt einen Teilnehmer zum Termin
     @POST
     @Path("{terminId}/teilnehmer")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -81,6 +85,7 @@ public class TermineService {
         teilnehmerDAO.create(nutzer.getId(), terminId);
     }
 
+    //Löscht den Teilnehmer vom Termin
     @DELETE
     @Path("{terminId}/teilnehmer")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -88,6 +93,7 @@ public class TermineService {
         return teilnehmerDAO.remove(nutzer.getId(), terminId);
     }
 
+    //Listet die Eingeladenen des Termins
     @GET
     @Path("{terminId}/eingeladene")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -95,8 +101,8 @@ public class TermineService {
         return einladungDAO.getEingeladene(terminId);
     }
 
-
-    @POST
+    //Es ändert den Eingeladene des Termins auf Teilnehmer
+    @PUT
     @Path("{terminId}/eingeladene")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -104,6 +110,7 @@ public class TermineService {
         einladungDAO.annehmen(nutzer.getId(), terminId);
     }
 
+    //Löscht den Eingeladene des Termins
     @DELETE
     @Path("{terminId}/eingeladene")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -111,12 +118,17 @@ public class TermineService {
          einladungDAO.ablehnen(nutzer.getId(), terminId);
     }
 
+    //Erstellt eine Einladung zum Termin
     @POST
-    @Path("{terminId}/einladung")
+    @Path("{terminId}/eingeladene")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public void createEinladung(Nutzer wer, Nutzer wen, @PathParam("terminId") int terminId) {
-        einladungDAO.create(wer.getId(), wen.getId(), terminId);
+    public void createEinladung(
+            @QueryParam("wer") int wer,
+            @QueryParam("wen") int wen,
+            @PathParam("terminId") int terminId) {
+
+        einladungDAO.create(wer, wen, terminId);
     }
 
 }
