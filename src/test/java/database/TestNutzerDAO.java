@@ -1,33 +1,80 @@
 package database;
 
+import com.sun.tools.javac.util.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.validation.constraints.AssertTrue;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
 public class TestNutzerDAO {
 
-    NutzerDAO personDAO;
+    NutzerDAO nutzerDAO;
 
     @Before
     public void setUp() {
-        personDAO = new NutzerDAO();
+        nutzerDAO = new NutzerDAO();
     }
 
     @Test
-    public void testListAll() {
-        for (Nutzer p : personDAO.findAll()) {
-            System.out.println(p);
-        }
+    public void insertIntoEmptyDB() {
+
+        removeAlleNutzer();
+        Nutzer nutzer = new Nutzer("Max", "Musterman");
+        Nutzer insertedNutzer = nutzerDAO.create(nutzer);
+        List<Nutzer> list = nutzerDAO.findAll();
+
+        assertEquals("Fehler: Es gibt keine oder mehr als einen Nutzer in der Datenbank",
+                list.size(), 1);
+        assertEquals("Fehler: Der erste Eintrag in der Datenbank ist nicht gleich mit den eingefügten Nutzer ",
+               list.get(0), insertedNutzer);
     }
 
     @Test
-    public void testFindByName() {
-        for (Nutzer p : personDAO.findByName("Gyorgyi", "Palatinus")) {
-            System.out.println(p);
-        }
+    public void updateSingleNutzer() {
+        removeAlleNutzer();
+        Nutzer nutzer = new Nutzer("Max", "Musterman");
+        Nutzer insertedNutzer = nutzerDAO.create(nutzer);
+        insertedNutzer.setNachname("NewMax");
+        nutzerDAO.update(insertedNutzer);
+
+        List<Nutzer> list = nutzerDAO.findAll();
+        assertEquals("Fehler: Es gibt keine oder mehr als einen Nutzer in der Datenbank",
+                list.size(), 1);
+        assertEquals("Fehler: Der erste Eintrag in der Datenbank ist nicht gleich mit dem geaenderten Nutzer",
+                list.get(0), insertedNutzer);
     }
 
     @Test
     public void findByID() {
-        System.out.println(personDAO.findById(1234));
+        removeAlleNutzer();
+        Nutzer nutzer = new Nutzer("Max", "Musterman");
+        Nutzer insertedNutzer = nutzerDAO.create(nutzer);
+
+        Nutzer nutzerById = nutzerDAO.findById(insertedNutzer.getId());
+        assertEquals("Fehler: Der mit der ID ausgesuchte Eintrag in der Datenbank ist nicht gleich mit dem eingefuegten Nutzer",
+                nutzerById, insertedNutzer);
+
+        int nichtExistierendesID = insertedNutzer.getId() + 1;
+        nutzerById = nutzerDAO.findById(nichtExistierendesID);
+        assertEquals("Fehler: Aussuchen von nicht existierenden Eintrag ist nicht fehlgeschlagen.", null, nutzerById);
+    }
+
+    private void removeAlleNutzer() {
+        Connection c = null;
+        try {
+            c = ConnectionHelper.getConnection();
+            PreparedStatement ps = c.prepareStatement("DELETE FROM Nutzer");
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionHelper.close(c);
+        }
     }
 }
