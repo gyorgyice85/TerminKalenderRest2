@@ -2,6 +2,7 @@ package database;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
+import java.util.Objects;
 
 @XmlRootElement
 public class Nutzer{
@@ -12,7 +13,12 @@ public class Nutzer{
 
     public Nutzer() {};
 
-    public Nutzer(int id,String vorname,String nachname) {
+    public Nutzer(String vorname, String nachname) {
+        this.vorname = vorname;
+        this.nachname = nachname;
+    }
+
+    public Nutzer(int id, String vorname, String nachname) {
 
         this.id = id;
         this.vorname = vorname;
@@ -38,6 +44,24 @@ public class Nutzer{
         EinladungDAO einladungDAO = new EinladungDAO();
         return einladungDAO.getEinladungen(this);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Nutzer nutzer = (Nutzer) o;
+        return id == nutzer.id &&
+                Objects.equals(vorname, nutzer.vorname) &&
+                Objects.equals(nachname, nutzer.nachname);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, vorname, nachname);
+    }
+
+
 
     public int getId() {
         return id;
