@@ -118,9 +118,5 @@ public class NutzerServiceDemo {
         String responseMsg = target.path("nutzer").path(String.valueOf(nutzer.getId())).path("termine").request().
                 accept(MediaType.APPLICATION_JSON).get(String.class);
         System.out.println(responseMsg);
-
     }
-
-
-
 }

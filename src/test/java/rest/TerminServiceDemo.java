@@ -150,6 +150,4 @@ public class TerminServiceDemo {
         System.out.println(responseMsg);
     }
 
-
-
 }
