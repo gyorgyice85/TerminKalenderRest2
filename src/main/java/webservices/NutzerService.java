@@ -10,9 +10,9 @@ import java.util.List;
 public class NutzerService {
 
     static final String webContextPath = "/nutzer";
-    NutzerDAO nutzerDAO;
-    EinladungDAO einladungDAO;
-    TeilnehmerDAO teilnehmerDAO;
+    private NutzerDAO nutzerDAO;
+    private EinladungDAO einladungDAO;
+    private TeilnehmerDAO teilnehmerDAO;
 
     public NutzerService() {
         nutzerDAO = new NutzerDAO();
@@ -20,9 +20,10 @@ public class NutzerService {
         teilnehmerDAO = new TeilnehmerDAO();
     }
 
-
-    //Gibt den Nutzer nach dem Name an.
-    //Wenn keinen Nutzer gefunden wurde, listet es alle Nutzer aus
+    /**
+     * Gibt den Nutzer nach dem Name an.
+     * Wenn kein Name angegeben ist, listet es alle Nutzer aus.
+     */
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public List<Nutzer> find(@QueryParam("vorname") String vorname, @QueryParam("nachname") String nachname) {
@@ -33,7 +34,9 @@ public class NutzerService {
         }
     }
 
-    //Erstellt den Nutzer
+    /**
+     * Erstellt den Nutzer
+     */
     @POST
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -41,8 +44,9 @@ public class NutzerService {
         return nutzerDAO.create(nutzer);
     }
 
-
-    //Gibt den Nutzer nach dem ID an
+    /**
+     * Gibt den Nutzer mit ID=nutzerID an
+     */
     @GET
     @Path("{nutzerID}")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -50,8 +54,9 @@ public class NutzerService {
         return nutzerDAO.findById(nutzerID);
     }
 
-
-    //Ändert den Nutzer
+    /**
+     * Ändert den Nutzer
+     */
     @PUT
     @Path("{nutzerID}")
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -60,17 +65,19 @@ public class NutzerService {
        return nutzerDAO.update(nutzer);
     }
 
-
-    //Löscht den Nutzer
+    /**
+     * Löscht den Nutzer
+     */
     @DELETE
     @Path("{nutzerID}")
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public boolean removeNutzer(@PathParam("nutzerID") int nutzerID) {
-        return nutzerDAO.remove(nutzerID);
+    @Produces({MediaType.TEXT_PLAIN})
+    public String removeNutzer(@PathParam("nutzerID") int nutzerID) {
+        return String.valueOf(nutzerDAO.remove(nutzerID));
     }
 
-
-    //Gibt alle Einladungen des Nutzers an
+    /**
+     * Gibt alle Einladungen des Nutzers an
+     */
     @GET
     @Path("{nutzerID}/einladungen")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -78,8 +85,9 @@ public class NutzerService {
         return einladungDAO.getEinladungen(nutzerID);
     }
 
-
-    //Gibt alle Termine des Nutzers an
+    /**
+     * Gibt alle Termine des Nutzers an
+     */
     @GET
     @Path("{nutzerID}/termine")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
