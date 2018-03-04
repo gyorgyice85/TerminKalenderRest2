@@ -20,7 +20,7 @@ public class Login {
     private JTextField textField;
     private JTextField txtUsername;
     private JPasswordField txtPassword;
-    private JButton btnReset;
+    private JButton btnRegistration;
     private JButton btnExit;
     private JLabel lblLoginSystems;
 
@@ -52,7 +52,7 @@ public class Login {
      */
     private void initialize() {
         frame = new JFrame();
-        frame.setBounds(100, 100, 450, 300);
+        frame.setBounds(600, 300, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
@@ -60,79 +60,52 @@ public class Login {
         lblUsername.setBounds(38, 74, 124, 30);
         frame.getContentPane().add(lblUsername);
 
-        JLabel lblPassword = new JLabel("Password");
-        lblPassword.setBounds(38, 135, 124, 30);
-        frame.getContentPane().add(lblPassword);
-
-        textField = new JTextField();
-        textField.setBounds(257, 79, 0, 2);
-        frame.getContentPane().add(textField);
-        textField.setColumns(10);
 
         txtUsername = new JTextField();
         txtUsername.setBounds(162, 79, 221, 30);
         frame.getContentPane().add(txtUsername);
         txtUsername.setColumns(10);
 
-        txtPassword = new JPasswordField();
-        txtPassword.setBounds(162, 135, 221, 30);
-        frame.getContentPane().add(txtPassword);
 
         JButton btnLogin = new JButton("Login");
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
-                String password=txtPassword.getText();
-                String username=txtUsername.getText();
+                String username = txtUsername.getText();
 
-                if(password.contains("password") && username.contains("name")) {
-                    txtPassword.setText(null);
+                if(username.contains("name")) {
+
                     txtUsername.setText(null);
                 }
                 else {
-                    JOptionPane.showMessageDialog(null, "Invalid Login Details", "Login Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Invalid Login Details",
+                            "Login Error", JOptionPane.ERROR_MESSAGE);
                     txtPassword.setText(null);
                     txtUsername.setText(null);
                 }
             }
         });
-        btnLogin.setBounds(39, 199, 89, 30);
+        btnLogin.setBounds(100, 199, 89, 30);
         frame.getContentPane().add(btnLogin);
 
-        btnReset = new JButton("Reset");
-        btnReset.addActionListener(new ActionListener() {
+        btnRegistration = new JButton("Registration");
+        btnRegistration.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
                 txtUsername.setText(null);
-                txtPassword.setText(null);
             }
         });
-        btnReset.setBounds(168, 199, 89, 30);
-        frame.getContentPane().add(btnReset);
 
-        btnExit = new JButton("Exit");
-        btnExit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                frame =new JFrame("Exit");
-                if(JOptionPane.showConfirmDialog(frame, "Confirm if you want to exit", "Login Systems" ,
-                        JOptionPane.YES_NO_CANCEL_OPTION)== JOptionPane.YES_NO_CANCEL_OPTION){
-                    System.exit(0);
-                }
-            }
-        });
-        btnExit.setBounds(295, 199, 89, 30);
-        frame.getContentPane().add(btnExit);
+        btnRegistration.setBounds(200, 199, 120, 30);
+        frame.getContentPane().add(btnRegistration);
 
-        JSeparator separator = new JSeparator();
-        separator.setBounds(38, 186, 347, 2);
-        frame.getContentPane().add(separator);
 
         JSeparator separator_1 = new JSeparator();
         separator_1.setBounds(38, 53, 347, 10);
         frame.getContentPane().add(separator_1);
 
-        lblLoginSystems = new JLabel("Login Systems");
-        lblLoginSystems.setFont(new Font("Tahoma", Font.BOLD, 13));
-        lblLoginSystems.setBounds(139, 11, 124, 31);
+        lblLoginSystems = new JLabel("Termincalendar");
+        lblLoginSystems.setFont(new Font("Tahoma", Font.BOLD, 20));
+        lblLoginSystems.setBounds(139, 11, 250, 31);
         frame.getContentPane().add(lblLoginSystems);
     }
 }
