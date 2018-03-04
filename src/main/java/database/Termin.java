@@ -1,6 +1,7 @@
 package database;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
@@ -15,7 +16,7 @@ public class Termin {
         private String ort;
 
 
-    public Termin() {};
+    public Termin() {}
 
     public Termin(int id, Timestamp von, Timestamp bis, String ort, String beschreibung) {
 
@@ -76,6 +77,7 @@ public class Termin {
         this.id = id;
     }
 
+    @XmlJavaTypeAdapter(TimestampAdapter.class)
     public Timestamp getVon() {
         return von;
     }
@@ -84,6 +86,7 @@ public class Termin {
         this.von = von;
     }
 
+    @XmlJavaTypeAdapter(TimestampAdapter.class)
     public Timestamp getBis() {
         return bis;
     }
