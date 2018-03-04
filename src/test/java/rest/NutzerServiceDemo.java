@@ -44,7 +44,7 @@ public class NutzerServiceDemo {
     @Test
     public void getSomeNutzer() {
         // NOTE: add nutzer Max Mustermann and Maximilian Musterman
-        List< Nutzer> nutzerList = nutzerHandle.findByName("Max", "Muster");
+        List< Nutzer> nutzerList = nutzerHandle.findByName("Max", "");
 
         for (Nutzer nutzer : nutzerList) {
             System.out.println(nutzer);
@@ -53,9 +53,8 @@ public class NutzerServiceDemo {
 
     @Test
     public void createNutzer() {
-        Nutzer erstellterNutzer = nutzerHandle.create(new Nutzer());
+        Nutzer erstellterNutzer = nutzerHandle.create(new Nutzer("Peter", "Musterman"));
         System.out.println(erstellterNutzer);
-
     }
 
     @Test
@@ -66,22 +65,25 @@ public class NutzerServiceDemo {
 
     @Test
     public void updateNutzer() {
-        Nutzer nutzer = new Nutzer();
-        // NOTE: insert, than update Nutzer
-        Nutzer updatedNutzer = nutzerHandle.update(nutzer);
-
+        Nutzer nutzer = new Nutzer("Max", "Musterring");
+        Nutzer createdNutzer = nutzerHandle.create(nutzer);
+        System.out.println("Eingefuegter Nutzer: " + createdNutzer);
+        createdNutzer.setNachname("Musterman");
+        Nutzer updatedNutzer = nutzerHandle.update(createdNutzer);
         System.out.println("Geaenderter Nutzer: " + updatedNutzer);
     }
 
     @Test
     public void deleteNutzer() {
-        boolean responseMsg = nutzerHandle.remove(1234);
+        Nutzer createdNutzer = nutzerHandle.create(new Nutzer());
+        boolean responseMsg = nutzerHandle.remove(createdNutzer.getId());
         System.out.println(responseMsg);
     }
 
     @Test
     public void getEinladungen() {
 
+        // TODO test
         Nutzer nutzer = new Nutzer();
         List<Termin> einladungenList = nutzerHandle.getEinladungen(nutzer);
 
@@ -93,6 +95,7 @@ public class NutzerServiceDemo {
     @Test
     public void getTermine() {
 
+        // TODO test
         Nutzer nutzer = new Nutzer();
         List<Termin> terminList = nutzerHandle.getTermine(nutzer);
 
