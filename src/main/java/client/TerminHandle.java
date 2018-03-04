@@ -74,7 +74,7 @@ public class TerminHandle {
 
     public void einladen(Termin termin, Nutzer wer, Nutzer wen) {
         target.path("termine").path(String.valueOf(termin.getId()))
-                .path("eingeladene").queryParam("wer", wer.getId()).queryParam("wen", wen.getId())
+                .path("einladen").queryParam("wer", wer.getId()).queryParam("wen", wen.getId())
                 .request(MediaType.APPLICATION_XML)
                 .post(Entity.xml(null));
     }
@@ -82,14 +82,15 @@ public class TerminHandle {
     public void annehmen(Termin termin, Nutzer eingeladene) {
         target.path("termine").path(String.valueOf(termin.getId()))
                 .path("eingeladene").path(String.valueOf(eingeladene.getId()))
+                .path("annehmen")
                 .request(MediaType.APPLICATION_XML)
-                .put(Entity.xml(null));
+                .post(Entity.xml(null));
     }
 
     public void ablehnen(Termin termin, Nutzer eingeladene) {
         target.path("termine").path(String.valueOf(termin.getId()))
                 .path("eingeladene").path(String.valueOf(eingeladene.getId()))
-                .request(MediaType.APPLICATION_XML)
+                .request(MediaType.TEXT_PLAIN)
                 .delete();
     }
 
@@ -102,7 +103,7 @@ public class TerminHandle {
     public void teilnahmeAbsagen(Termin termin, Nutzer eingeladene) {
         target.path("termine").path(String.valueOf(termin.getId()))
                 .path("teilnehmer").path(String.valueOf(eingeladene.getId()))
-                .request(MediaType.APPLICATION_XML)
+                .request(MediaType.TEXT_PLAIN)
                 .delete();
     }
 }

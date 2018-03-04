@@ -1,5 +1,6 @@
 package rest;
 
+import client.NutzerHandle;
 import client.TerminHandle;
 import database.Nutzer;
 import database.Termin;
@@ -22,6 +23,7 @@ public class TerminServiceDemo {
     private WebTarget target;
 
     private TerminHandle terminHandle;
+    private NutzerHandle nutzerHandle;
 
     @Before
     public void setUp() {
@@ -29,6 +31,7 @@ public class TerminServiceDemo {
         server = KalenderServer.startServer();
         // create the client
         terminHandle = new TerminHandle();
+        nutzerHandle = new NutzerHandle();
     }
 
     @After
@@ -47,7 +50,7 @@ public class TerminServiceDemo {
     @Test
     public void getSomeTermin(){
 
-        List<Termin> terminList = terminHandle.findByBeschreibung("projekt");
+        List<Termin> terminList = terminHandle.findByBeschreibung("MUSTER");
 
         for (Termin termin : terminList) {
             System.out.println(termin);
@@ -67,26 +70,30 @@ public class TerminServiceDemo {
 
     @Test
     public void getTerminByID() {
-        Termin responseMsg = terminHandle.findById(1234);
+        Termin createdTermin = terminHandle.create(new Termin());
+        Termin responseMsg = terminHandle.findById(createdTermin.getId());
         System.out.println(responseMsg);
     }
 
     @Test
     public void updateTermin() {
-        Termin updatedTermin = terminHandle.update(new Termin());
+        Termin createdTermin = terminHandle.create(new Termin());
+        createdTermin.setBeschreibung("Muster");
+        Termin updatedTermin = terminHandle.update(createdTermin);
         System.out.println(updatedTermin);
     }
 
     @Test
     public void deleteTermin() {
-
-        boolean response = terminHandle.remove(1234);
+        Termin createdTermin = terminHandle.create(new Termin());
+        boolean response = terminHandle.remove(createdTermin.getId());
         System.out.println(response);
     }
 
     @Test
     public void getTeilnehmer() {
-        List<Nutzer> teilnehmer = terminHandle.getTeilnehmer(new Termin());
+
+        List<Nutzer> teilnehmer = terminHandle.getTeilnehmer(terminHandle.findById(20));
 
         for (Nutzer nutzer : teilnehmer) {
             System.out.println(nutzer);
@@ -94,22 +101,26 @@ public class TerminServiceDemo {
     }
 
     @Test
-    public void teilnehmerHinzufuegen(){
-        Nutzer nutzer = new Nutzer();
-        Termin termin = new Termin();
+    public void teilnehmerHinzufuegen() {
+        Nutzer nutzer = nutzerHandle.create(new Nutzer());
+        Termin termin = terminHandle.create(new Termin());
         terminHandle.teilnehmerHinzufuegen(termin, nutzer);
     }
 
     @Test
     public void absagen(){
-        Nutzer nutzer = new Nutzer();
+        Nutzer nutzer = nutzerHandle.create(new Nutzer("abgesagte", "nutzer"));
         Termin termin = new Termin();
+        termin.setBeschreibung("abgesagtes Termin");
+        termin = terminHandle.create(termin);
+        terminHandle.teilnehmerHinzufuegen(termin, nutzer);
         terminHandle.teilnahmeAbsagen(termin, nutzer);
     }
 
     @Test
     public void getEingeladene(){
-        List<Nutzer> listEingeladene = terminHandle.getEingeladene(new Termin());
+
+        List<Nutzer> listEingeladene = terminHandle.getEingeladene(terminHandle.findById(20));
 
         for(Nutzer eingeladene: listEingeladene) {
             System.out.println(eingeladene);
@@ -118,23 +129,33 @@ public class TerminServiceDemo {
 
     @Test
     public void annehmen(){
-        Nutzer nutzer = new Nutzer();
+        Nutzer wer = nutzerHandle.create(new Nutzer("wer", "wer"));
+        Nutzer wen = nutzerHandle.create(new Nutzer("wen", "wen"));
         Termin termin = new Termin();
-        terminHandle.annehmen(termin, nutzer);
+        termin.setBeschreibung("einladung test");
+        termin = terminHandle.create(termin);
+        terminHandle.einladen(termin, wer, wen);
+        terminHandle.annehmen(termin, wen);
     }
 
     @Test
-    public void ablehnen(){
-        Nutzer nutzer = new Nutzer();
+    public void ablehnen() {
+        Nutzer wer = nutzerHandle.create(new Nutzer("wer", "wer"));
+        Nutzer wen = nutzerHandle.create(new Nutzer("wen", "wen"));
         Termin termin = new Termin();
-        terminHandle.ablehnen(termin, nutzer);
+        termin.setBeschreibung("einladung test");
+        termin = terminHandle.create(termin);
+        terminHandle.einladen(termin, wer, wen);
+        terminHandle.ablehnen(termin, wen);
     }
 
     @Test
     public void einladen(){
-        Nutzer wer = new Nutzer();
-        Nutzer wen = new Nutzer();
+        Nutzer wer = nutzerHandle.create(new Nutzer("wer", "wer"));
+        Nutzer wen = nutzerHandle.create(new Nutzer("wen", "wen"));
         Termin termin = new Termin();
+        termin.setBeschreibung("einladung test");
+        termin = terminHandle.create(termin);
         terminHandle.einladen(termin, wer, wen);
     }
 

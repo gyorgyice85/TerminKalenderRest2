@@ -83,9 +83,7 @@ public class NutzerServiceDemo {
     @Test
     public void getEinladungen() {
 
-        // TODO test
-        Nutzer nutzer = new Nutzer();
-        List<Termin> einladungenList = nutzerHandle.getEinladungen(nutzer);
+        List<Termin> einladungenList = nutzerHandle.getEinladungen(nutzerHandle.findById(4361));
 
         for (Termin termin : einladungenList) {
             System.out.println(termin);
@@ -95,9 +93,7 @@ public class NutzerServiceDemo {
     @Test
     public void getTermine() {
 
-        // TODO test
-        Nutzer nutzer = new Nutzer();
-        List<Termin> terminList = nutzerHandle.getTermine(nutzer);
+        List<Termin> terminList = nutzerHandle.getTermine(nutzerHandle.findById(4359));
 
         for (Termin termin : terminList) {
             System.out.println(termin);

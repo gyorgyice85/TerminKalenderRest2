@@ -138,8 +138,8 @@ public class TermineService {
     /**
      * Eine Einladung annehmen: man wird vom Eingeladene zum Teilnehmer
      */
-    @PUT
-    @Path("{terminID}/eingeladene/{nutzerID}")
+    @POST
+    @Path("{terminID}/eingeladene/{nutzerID}/annehmen")
     public void annehmen(@PathParam("terminID") int terminID, @PathParam("nutzerID") int nutzerID) {
         einladungDAO.annehmen(nutzerID, terminID);
     }
@@ -157,8 +157,21 @@ public class TermineService {
      * Erstellt eine Einladung zum Termin
      */
     @POST
-    @Path("{terminID}/{a:eingeladene|einladen}")    // TODO check if multiple paths works
+    @Path("{terminID}/eingeladene")
     public void createEinladung(
+            @QueryParam("wer") int wer,
+            @QueryParam("wen") int wen,
+            @PathParam("terminID") int terminID) {
+
+        einladungDAO.create(wer, wen, terminID);
+    }
+
+    /**
+     * Erstellt eine Einladung zum Termin
+     */
+    @POST
+    @Path("{terminID}/einladen")
+    public void einladen(
             @QueryParam("wer") int wer,
             @QueryParam("wen") int wen,
             @PathParam("terminID") int terminID) {
