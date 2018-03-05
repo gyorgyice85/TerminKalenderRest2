@@ -87,7 +87,8 @@ public class Login {
         btnRegistration = new JButton("Registration");
         btnRegistration.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                RegistrationFormApplication.();
+                Registration window = new Registration();
+                window.frame.setVisible(true);
             }
         });
 

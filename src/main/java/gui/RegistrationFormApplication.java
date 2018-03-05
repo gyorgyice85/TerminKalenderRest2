@@ -1,3 +1,4 @@
+/*
 package gui;
 
 import javafx.application.Application;
@@ -102,7 +103,8 @@ public class RegistrationFormApplication {
     }
 
 
-    /*private GridPane createRegistrationFormPane() {
+    */
+/*private GridPane createRegistrationFormPane() {
         // Instantiate a new Grid Pane
         GridPane gridPane = new GridPane();
 
@@ -131,9 +133,11 @@ public class RegistrationFormApplication {
         gridPane.getColumnConstraints().addAll(columnOneConstraints, columnTwoConstrains);
 
         return gridPane;
-    }*/
+    }*//*
 
-    /*private void addUIControls(final GridPane gridPane) {
+
+    */
+/*private void addUIControls(final GridPane gridPane) {
         // Add Header
         Label headerLabel = new Label("Registration Form");
         headerLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
@@ -197,7 +201,8 @@ public class RegistrationFormApplication {
                 showAlert(Alert.AlertType.CONFIRMATION, gridPane.getScene().getWindow(), "Registration Successful!", "Welcome " + nameField.getText());
             }
         });
-    }*/
+    }*//*
+
 
     private void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
         Alert alert = new Alert(alertType);
@@ -211,3 +216,4 @@ public class RegistrationFormApplication {
 }
 
 
+*/
