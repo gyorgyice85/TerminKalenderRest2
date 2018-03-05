@@ -71,17 +71,13 @@ public class Login {
         btnLogin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
 
-                String username = txtUsername.getText();
 
-                if(username.contains("name")) {
-
-                    txtUsername.setText(null);
-                }
-                else {
+                if(txtUsername.getText().isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Invalid Login Details",
                             "Login Error", JOptionPane.ERROR_MESSAGE);
-                    txtPassword.setText(null);
-                    txtUsername.setText(null);
+                }
+                else {
+                    CalendarProgram.display();
                 }
             }
         });
