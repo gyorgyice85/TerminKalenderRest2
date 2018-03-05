@@ -20,7 +20,7 @@ import javax.swing.JCheckBox;
 public class TerminBox {
 
     private JFrame frame;
-    private JTextField textField;
+    private JTextField textField, textField_0;
     private JTextField textField_1;
     private JTextField textField_2;
 
@@ -61,11 +61,20 @@ public class TerminBox {
         frame.getContentPane().add(textField);
         textField.setColumns(10);
 
-        JLabel lblName = new JLabel("Name");
-        lblName.setBounds(65, 31, 46, 14);
-        frame.getContentPane().add(lblName);
+        JLabel lblFrom = new JLabel("From");
+        lblFrom.setBounds(65, 31, 46, 14);
+        frame.getContentPane().add(lblFrom);
 
-        JLabel lblPhone = new JLabel("Phone #");
+        JLabel lblUntil = new JLabel("Until");
+        lblUntil.setBounds(230, 31, 46, 14);
+        frame.getContentPane().add(lblUntil);
+
+        textField_0 = new JTextField();
+        textField_0.setBounds(295, 28, 86, 20);
+        frame.getContentPane().add(textField_0);
+
+
+        JLabel lblPhone = new JLabel("Where");
         lblPhone.setBounds(65, 68, 46, 14);
         frame.getContentPane().add(lblPhone);
 
@@ -74,7 +83,7 @@ public class TerminBox {
         frame.getContentPane().add(textField_1);
         textField_1.setColumns(10);
 
-        JLabel lblEmailId = new JLabel("Email Id");
+        JLabel lblEmailId = new JLabel("Invitees");
         lblEmailId.setBounds(65, 115, 46, 14);
         frame.getContentPane().add(lblEmailId);
 
@@ -93,47 +102,24 @@ public class TerminBox {
 
 
 
-        JButton btnClear = new JButton("Clear");
+        JButton btnClear = new JButton("Cancel");
 
-        btnClear.setBounds(312, 387, 89, 23);
+        btnClear.setBounds(312, 320, 89, 23);
         frame.getContentPane().add(btnClear);
 
-        JLabel lblSex = new JLabel("Sex");
-        lblSex.setBounds(65, 228, 46, 14);
-        frame.getContentPane().add(lblSex);
-
-        JLabel lblMale = new JLabel("Male");
-        lblMale.setBounds(128, 228, 46, 14);
-        frame.getContentPane().add(lblMale);
-
-        JLabel lblFemale = new JLabel("Female");
-        lblFemale.setBounds(292, 228, 46, 14);
-        frame.getContentPane().add(lblFemale);
-
-        final JRadioButton radioButton = new JRadioButton("");
-        radioButton.setBounds(337, 224, 109, 23);
-        frame.getContentPane().add(radioButton);
-
-        final JRadioButton radioButton_1 = new JRadioButton("");
-        radioButton_1.setBounds(162, 224, 109, 23);
-        frame.getContentPane().add(radioButton_1);
-
-        JLabel lblOccupation = new JLabel("Occupation");
-        lblOccupation.setBounds(65, 288, 67, 14);
+        JLabel lblOccupation = new JLabel("Show As");
+        lblOccupation.setBounds(65, 220, 67, 14);
         frame.getContentPane().add(lblOccupation);
 
         final JComboBox<String> comboBox = new JComboBox<String>();
         comboBox.addItem("Select");
-        comboBox.addItem("Business");
-        comboBox.addItem("Engineer");
-        comboBox.addItem("Doctor");
-        comboBox.addItem("Student");
-        comboBox.addItem("Others");
+        comboBox.addItem("Busy");
+        comboBox.addItem("Free");
         comboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
             }
         });
-        comboBox.setBounds(180, 285, 91, 20);
+        comboBox.setBounds(180, 220, 91, 20);
         frame.getContentPane().add(comboBox);
 
 
@@ -141,13 +127,13 @@ public class TerminBox {
 
         btnSubmit.setBackground(Color.BLUE);
         btnSubmit.setForeground(Color.MAGENTA);
-        btnSubmit.setBounds(65, 387, 89, 23);
+        btnSubmit.setBounds(65, 320, 89, 23);
         frame.getContentPane().add(btnSubmit);
 
 
         btnSubmit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                if(textField.getText().isEmpty()||(textField_1.getText().isEmpty())||(textField_2.getText().isEmpty())||(textArea_1.getText().isEmpty())||((radioButton_1.isSelected())&&(radioButton.isSelected()))||(comboBox.getSelectedItem().equals("Select")))
+                if(textField.getText().isEmpty()||(textField_0.getText().isEmpty())||(textField_1.getText().isEmpty())||(textField_2.getText().isEmpty())||(textArea_1.getText().isEmpty())||(comboBox.getSelectedItem().equals("Select")))
                     JOptionPane.showMessageDialog(null, "Data Missing");
                 else
                     JOptionPane.showMessageDialog(null, "Data Submitted");
@@ -156,16 +142,8 @@ public class TerminBox {
 
         btnClear.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                textField_1.setText(null);
-                textField_2.setText(null);
-                textField.setText(null);
-                textArea_1.setText(null);
-                radioButton.setSelected(false);
-                radioButton_1.setSelected(false);
-                comboBox.setSelectedItem("Select");
-
-
-            }
+                System.exit(0);
+                }
         });
 
     }
