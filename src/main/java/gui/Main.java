@@ -23,8 +23,7 @@ public class Main {
     public static void main(String[] args) {
         launch(args); //Show up programm java fx
     }
-
-    @Override
+    
     public void start(Stage primaryStage) throws Exception{ //Stage -- Minimize, close
         firstStage = primaryStage;
         firstStage.setTitle("Neuer Termin");
