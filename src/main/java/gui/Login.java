@@ -2,24 +2,18 @@ package gui;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
+
+import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JSeparator;
 import java.awt.Font;
 
 public class Login {
 
 
     private JFrame frame;
-    private JTextField textField;
-    private JTextField txtUsername;
-    private JPasswordField txtPassword;
+    //private JTextField textField;
+    //private JTextField txtUsername;
     private JButton btnRegistration;
     private JButton btnExit;
     private JLabel lblLoginSystems;
@@ -56,7 +50,25 @@ public class Login {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JLabel lblUsername = new JLabel("Username");
+        JLabel lblUsername = new JLabel("Username : ");
+        lblUsername.setBounds(38, 74, 124, 30);
+        frame.getContentPane().add(lblUsername);
+
+        final JComboBox<String> comboBox = new JComboBox<String>();
+        comboBox.addItem("Gyoergyipalatinus");
+        comboBox.addItem("Eridhobuffery");
+        comboBox.addItem("Enxhinina");
+        comboBox.addItem("Peterparker");
+        comboBox.addItem("Timoklein");
+        comboBox.addItem("Others");
+        comboBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+            }
+        });
+        comboBox.setBounds(150, 120, 140, 30);
+        frame.getContentPane().add(comboBox);
+
+        /*JLabel lblUsername = new JLabel("Username");
         lblUsername.setBounds(38, 74, 124, 30);
         frame.getContentPane().add(lblUsername);
 
@@ -64,7 +76,7 @@ public class Login {
         txtUsername = new JTextField();
         txtUsername.setBounds(162, 79, 221, 30);
         frame.getContentPane().add(txtUsername);
-        txtUsername.setColumns(10);
+        txtUsername.setColumns(10);*/
 
 
         JButton btnLogin = new JButton("Login");
@@ -72,7 +84,7 @@ public class Login {
             public void actionPerformed(ActionEvent arg0) {
 
 
-                if(txtUsername.getText().isEmpty()) {
+                if(comboBox.getSelectedItem().equals("Select")/*txtUsername.getText().isEmpty()*/) {
                     JOptionPane.showMessageDialog(null, "Invalid Login Details",
                             "Login Error", JOptionPane.ERROR_MESSAGE);
                 }
