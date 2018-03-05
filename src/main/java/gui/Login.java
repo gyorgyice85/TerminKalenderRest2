@@ -87,7 +87,7 @@ public class Login {
         btnRegistration = new JButton("Registration");
         btnRegistration.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                txtUsername.setText(null);
+                RegistrationFormApplication.();
             }
         });
 

@@ -27,7 +27,7 @@ public class TerminBox {
     /**
      * Launch the application.
      */
-    public static void main(String[] args) {
+ /*   public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -39,7 +39,7 @@ public class TerminBox {
             }
         });
     }
-
+*/
     /**
      * Create the application.
      */
@@ -133,7 +133,7 @@ public class TerminBox {
 
         btnSubmit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                if(textField.getText().isEmpty()||(textField_0.getText().isEmpty())||(textField_1.getText().isEmpty())||(textField_2.getText().isEmpty())||(textArea_1.getText().isEmpty())||(comboBox.getSelectedItem().equals("Select")))
+                if(textField.getText().isEmpty() ||(textField_0.getText().isEmpty())||(textField_1.getText().isEmpty())||(textField_2.getText().isEmpty())||(textArea_1.getText().isEmpty())||(comboBox.getSelectedItem().equals("Select")))
                     JOptionPane.showMessageDialog(null, "Data Missing");
                 else
                     JOptionPane.showMessageDialog(null, "Data Submitted");
