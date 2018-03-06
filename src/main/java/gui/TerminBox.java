@@ -8,13 +8,15 @@ import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Calendar;
+import java.util.Date;
 
 public class TerminBox {
 
     private JFrame frame;
-    private JTextField textField, textField_0;
+    private JFormattedTextField textField, textField_0;
     private JTextField textField_1;
     private JTextField textField_2;
+    private JTextArea textArea_1;
 
     int month = java.util.Calendar.getInstance().get(Calendar.MONTH);
     int year = java.util.Calendar.getInstance().get(Calendar.YEAR);
@@ -158,7 +160,7 @@ public class TerminBox {
 
         final JTextField text = new JTextField();
 
-        textField = new JTextField();
+        textField = new JFormattedTextField();
         textField.setBounds(128, 28, 86, 20);
         frame.getContentPane().add(textField);
         textField.setColumns(10);
@@ -175,7 +177,7 @@ public class TerminBox {
         lblUntil.setBounds(280, 31, 46, 14);
         frame.getContentPane().add(lblUntil);
 
-        textField_0 = new JTextField();
+        textField_0 = new JFormattedTextField();
         textField_0.setBounds(345, 28, 86, 20);
         frame.getContentPane().add(textField_0);
 
@@ -202,11 +204,11 @@ public class TerminBox {
         frame.getContentPane().add(textField_2);
         textField_2.setColumns(10);
 
-        JLabel lblAddress = new JLabel("Address");
+        JLabel lblAddress = new JLabel("Beschreibung");
         lblAddress.setBounds(65, 162, 46, 14);
         frame.getContentPane().add(lblAddress);
 
-        final JTextArea textArea_1 = new JTextArea();
+        textArea_1 = new JTextArea();
         textArea_1.setBounds(126, 157, 212, 40);
         frame.getContentPane().add(textArea_1);
 
@@ -246,6 +248,7 @@ public class TerminBox {
                     JOptionPane.showMessageDialog(null, "Data Missing");
                 else
                     JOptionPane.showMessageDialog(null, "Data Submitted");
+                    CalendarProgram.display();
             }
         });
 
@@ -257,19 +260,43 @@ public class TerminBox {
 
         btnDate1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                textField.setText(new TerminBox(frame).setPickedDate());
+                textField.setValue(new TerminBox(frame).setPickedDate());
             }
         });
 
         btnDate2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                textField_0.setText(new TerminBox(frame).setPickedDate());
+                textField_0.setValue(new TerminBox(frame).setPickedDate());
             }
         });
 
 
     }
 
+    public String getBeschreibung(){
+        String str = textArea_1.getText();
+        return str;
+    }
+
+    public Date getFrom(){
+        Date str = (Date) textField.getValue();
+        return str;
+    }
+
+    public Date getUntil(){
+        Date str = (Date) textField_0.getValue();
+        return str;
+    }
+
+    public String getWhere(){
+        String str = textArea_1.getText();
+        return str;
+    }
+
+    public String getEinladung(){
+        String str = textField_1.getText();
+        return str;
+    }
 
 }
 

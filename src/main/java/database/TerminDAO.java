@@ -1,10 +1,16 @@
 package database;
 
+import gui.MemoCalendar;
+import gui.TerminBox;
+
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TerminDAO {
+
+    TerminBox terminBox = new TerminBox();
 
     public List<Termin> findAll() {
         List<Termin> list = new ArrayList<Termin>();
@@ -73,16 +79,25 @@ public class TerminDAO {
 
    //
     public Termin create(Termin termin) {
+
+
+        // Initialisieren Value
+        String strBeschreibung = terminBox.getBeschreibung();
+        String strOrt = terminBox.getWhere();
+        java.util.Date strVon = terminBox.getFrom();
+        java.util.Date strBis = terminBox.getUntil();
+
+
         Connection c = null;
         PreparedStatement ps = null;
         try {
             c = ConnectionHelper.getConnection();
             ps = c.prepareStatement("INSERT INTO Termin (Beschreibung, Ort, Von, Bis) VALUES (?, ?, ?, ?)",
                     new String[] { "ID" });
-            ps.setString(1, termin.getBeschreibung());
-            ps.setString(2, termin.getOrt());
-            ps.setTimestamp(3, termin.getVon());
-            ps.setTimestamp(4, termin.getBis());
+            ps.setString(1, strBeschreibung);
+            ps.setString(2, strOrt);
+            ps.setTimestamp(3, new java.sql.Timestamp(strVon.getTime()));
+            ps.setTimestamp(4, new java.sql.Timestamp(strBis.getTime()));
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
@@ -104,15 +119,21 @@ public class TerminDAO {
 
 
     public Termin update(Termin termin) {
+
+        String strBeschreibung = terminBox.getBeschreibung();
+        String strOrt = terminBox.getWhere();
+        java.util.Date strVon = terminBox.getFrom();
+        java.util.Date strBis = terminBox.getUntil();
+
         Connection c = null;
         try {
             c = ConnectionHelper.getConnection();
             PreparedStatement ps = c.prepareStatement
                     ("UPDATE Termin SET Beschreibung =?, Ort =?, Von =?, Bis =? WHERE id =?");
-            ps.setString(1, termin.getBeschreibung());
-            ps.setString(2, termin.getOrt());
-            ps.setTimestamp(3, termin.getVon());
-            ps.setTimestamp(4, termin.getBis());
+            ps.setString(1, strBeschreibung);
+            ps.setString(2, strOrt);
+            ps.setTimestamp(3, new java.sql.Timestamp(strVon.getTime()));
+            ps.setTimestamp(4, new java.sql.Timestamp(strBis.getTime()));
             ps.setInt(5, termin.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -154,4 +175,6 @@ public class TerminDAO {
 
         return termin;
     }
+
+
 }
