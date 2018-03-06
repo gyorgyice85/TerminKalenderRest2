@@ -1,12 +1,13 @@
 package gui;
 
-import java.awt.EventQueue;
+import java.awt.*;
 
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Font;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class Login {
 
@@ -17,6 +18,9 @@ public class Login {
     private JButton btnRegistration;
     private JButton btnExit;
     private JLabel lblLoginSystems;
+
+    static Color accent = new Color(0, 188, 212);
+    static Color bg = new Color(96, 125, 139);
 
     /**
      * Launch the application.
@@ -32,6 +36,18 @@ public class Login {
                 }
             }
         });
+    }
+
+    public static Font loadFont(String name, float size){
+        InputStream is = Login.class.getResourceAsStream("/resources/"+name);
+        Font title = null;
+        try {
+            title = Font.createFont(Font.TRUETYPE_FONT, is);
+            title = title.deriveFont(size);
+        } catch (FontFormatException ex) {ex.printStackTrace();
+        }
+        catch (IOException ex){ex.printStackTrace();}
+        return title;
     }
 
     /**
