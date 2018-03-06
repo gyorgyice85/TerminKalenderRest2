@@ -49,11 +49,20 @@ public class Registration {
             frame.getContentPane().add(textField);
             textField.setColumns(10);
 
-            JLabel lblName = new JLabel("Name");
+            JLabel lblName = new JLabel("Nachname");
             lblName.setBounds(65, 31, 46, 14);
             frame.getContentPane().add(lblName);
 
-            JLabel lblEmailId = new JLabel("Email Id");
+            /*JLabel lblVorname = new JLabel("Vorname");
+            lblVorname.setBounds(210, 31, 46, 14);
+            frame.getContentPane().add(lblVorname);
+
+            textField_1 = new JTextField();
+            textField_1.setBounds(275, 28, 86, 20);
+            frame.getContentPane().add(textField_1);
+            textField_1.setColumns(10);*/
+
+            JLabel lblEmailId = new JLabel("Vorname");
             lblEmailId.setBounds(65, 115, 46, 14);
             frame.getContentPane().add(lblEmailId);
 
@@ -128,6 +137,7 @@ public class Registration {
                 public void actionPerformed(ActionEvent e) {
                     textField_2.setText(null);
                     textField.setText(null);
+                    //textField_1.setText(null);
                     radioButton.setSelected(false);
                     radioButton_1.setSelected(false);
                     //comboBox.setSelectedItem("Select");
@@ -137,5 +147,22 @@ public class Registration {
             });
 
         }
+
+        public String getNachname(){
+            String str = textField.getText();
+            return str;
+        }
+
+        /*public String getVorname(){
+            String str = textField_1.getText();
+            return str;
+        }*/
+
+        public String getVorname(){
+            String str = textField_2.getText();
+            return str;
+        }
+
+
 
 }
