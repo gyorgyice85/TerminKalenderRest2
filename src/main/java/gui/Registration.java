@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 
 public class Registration {
 
@@ -119,6 +120,7 @@ public class Registration {
                         JOptionPane.showMessageDialog(null, "Data Missing");
                     else
                         JOptionPane.showMessageDialog(null, "Data Submitted");
+                    CalendarProgram.display();
                 }
             });
 
