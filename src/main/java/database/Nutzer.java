@@ -1,5 +1,8 @@
 package database;
 
+import DAO.EinladungDAO;
+import DAO.TeilnehmerDAO;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;

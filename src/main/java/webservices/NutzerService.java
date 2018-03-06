@@ -1,5 +1,8 @@
 package webservices;
 
+import DAO.EinladungDAO;
+import DAO.NutzerDAO;
+import DAO.TeilnehmerDAO;
 import database.*;
 
 import javax.ws.rs.*;

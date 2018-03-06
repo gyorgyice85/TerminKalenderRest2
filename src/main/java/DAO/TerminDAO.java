@@ -1,5 +1,7 @@
-package database;
+package DAO;
 
+import database.ConnectionHelper;
+import database.Termin;
 import gui.MemoCalendar;
 import gui.TerminBox;
 
@@ -81,23 +83,16 @@ public class TerminDAO {
     public Termin create(Termin termin) {
 
 
-        // Initialisieren Value
-        String strBeschreibung = terminBox.getBeschreibung();
-        String strOrt = terminBox.getWhere();
-        java.util.Date strVon = terminBox.getFrom();
-        java.util.Date strBis = terminBox.getUntil();
-
-
         Connection c = null;
         PreparedStatement ps = null;
         try {
             c = ConnectionHelper.getConnection();
             ps = c.prepareStatement("INSERT INTO Termin (Beschreibung, Ort, Von, Bis) VALUES (?, ?, ?, ?)",
                     new String[] { "ID" });
-            ps.setString(1, strBeschreibung);
-            ps.setString(2, strOrt);
-            ps.setTimestamp(3, new java.sql.Timestamp(strVon.getTime()));
-            ps.setTimestamp(4, new java.sql.Timestamp(strBis.getTime()));
+            ps.setString(1, termin.getBeschreibung());
+            ps.setString(2, termin.getOrt());
+            ps.setTimestamp(3, termin.getVon());
+            ps.setTimestamp(4, termin.getBis());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
@@ -120,20 +115,15 @@ public class TerminDAO {
 
     public Termin update(Termin termin) {
 
-        String strBeschreibung = terminBox.getBeschreibung();
-        String strOrt = terminBox.getWhere();
-        java.util.Date strVon = terminBox.getFrom();
-        java.util.Date strBis = terminBox.getUntil();
-
         Connection c = null;
         try {
             c = ConnectionHelper.getConnection();
             PreparedStatement ps = c.prepareStatement
                     ("UPDATE Termin SET Beschreibung =?, Ort =?, Von =?, Bis =? WHERE id =?");
-            ps.setString(1, strBeschreibung);
-            ps.setString(2, strOrt);
-            ps.setTimestamp(3, new java.sql.Timestamp(strVon.getTime()));
-            ps.setTimestamp(4, new java.sql.Timestamp(strBis.getTime()));
+            ps.setString(1, termin.getBeschreibung());
+            ps.setString(2, termin.getOrt());
+            ps.setTimestamp(3, termin.getVon());
+            ps.setTimestamp(4, termin.getBis());
             ps.setInt(5, termin.getId());
             ps.executeUpdate();
         } catch (SQLException e) {

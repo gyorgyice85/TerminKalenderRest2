@@ -1,4 +1,7 @@
-package database;
+package DAO;
+
+import database.ConnectionHelper;
+import database.Nutzer;
 
 import java.sql.*;
 import java.util.ArrayList;

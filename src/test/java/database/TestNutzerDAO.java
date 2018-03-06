@@ -1,10 +1,9 @@
 package database;
 
-import com.sun.tools.javac.util.Assert;
+import DAO.NutzerDAO;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.validation.constraints.AssertTrue;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.List;

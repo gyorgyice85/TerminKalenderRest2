@@ -1,4 +1,8 @@
-package database;
+package DAO;
+
+import database.ConnectionHelper;
+import database.Nutzer;
+import database.Termin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
