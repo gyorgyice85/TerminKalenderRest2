@@ -60,7 +60,7 @@ public class Login {
     /**
      * Initialize the contents of the frame.
      */
-    private void initialize() {
+    public void initialize() {
         frame = new JFrame();
         frame.setBounds(600, 300, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

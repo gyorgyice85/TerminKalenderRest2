@@ -16,7 +16,6 @@ import javax.swing.border.TitledBorder;
 import com.alee.laf.WebLookAndFeel;
 import com.alee.laf.button.WebButton;
 import com.alee.laf.label.WebLabel;
-import database.CalendarData;
 
 /**
  * AVAILABLE AT https://github.com/dwatring/Memo-Calendar/
@@ -85,7 +84,7 @@ public class MemoCalendar extends CalendarData {
         setDateButtons();
         showCal();
         setInfoPanel();
-        setMemoPanel(this);
+        setMemoPanel();
         setSubPanels();
     }
 
@@ -163,12 +162,12 @@ public class MemoCalendar extends CalendarData {
     }
 
     private void readMemo() {
-        String memoAreaText = DBConnect.getContentData(MemoCalendar.this);
+        String memoAreaText = CalendarDataDAO.getContentData(MemoCalendar.this);
         this.memoArea.setText(memoAreaText);
     }
 
     private int[] getDatesFromDB(MemoCalendar calendar){
-        return DBConnect.getDates(calendar);
+        return CalendarDataDAO.getDates(calendar);
     }
 
     private class ListenForCalOpButtons implements ActionListener {
@@ -382,7 +381,8 @@ public class MemoCalendar extends CalendarData {
                 + today.get(1) + "&nbsp;(Today)</font></font></html>", 2);
         selectedDate.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
     }
-    public void setMemoPanel(MemoCalendar memo){
+    public void setMemoPanel(){
+        final MemoCalendar memo = new MemoCalendar();
         memoPanel = new JPanel();
         memoPanel.setBackground(Login.bg);
         memoPanel.setForeground(Color.WHITE);
@@ -404,7 +404,7 @@ public class MemoCalendar extends CalendarData {
                 }
                 else{
                     String str = memoArea.getText();
-                    DBConnect.setContentData(memo, str);
+                    CalendarDataDAO.setContentData(memo, str);
                     bottomInfo.setText("Data saved to database");
                 }
                 showCal();

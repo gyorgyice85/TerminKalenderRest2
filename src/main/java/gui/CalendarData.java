@@ -1,4 +1,4 @@
-package database;
+package gui;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -16,7 +16,7 @@ public class CalendarData {
     int[][] calDates = new int[CALENDAR_HEIGHT][CALENDAR_WIDTH];
     int year, month, day, lastDate;
     final int[] lastDateOfMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }; // JFMAMJJASOND
-    Calendar today = Calendar.getInstance(), cal;
+     static Calendar today = Calendar.getInstance(), cal;
 
     public void setCurrentDate() { // Sets current calendar data based on
         // getInstance of today
@@ -26,7 +26,7 @@ public class CalendarData {
         initializeCalendarData(this.today);
     }
 
-    private void initializeCalendarData(Calendar cal) {
+    public void initializeCalendarData(Calendar cal) {
         int calStartingPos = (cal.get(CALENDAR_WIDTH) + CALENDAR_WIDTH - cal.get(5) % CALENDAR_WIDTH) % CALENDAR_WIDTH;
         if (this.month == 1) {
             this.lastDate = (this.lastDateOfMonth[this.month] + checkLeapYear(this.year));
@@ -54,7 +54,7 @@ public class CalendarData {
         }
     }
 
-    private int checkLeapYear(int year) {
+    public int checkLeapYear(int year) {
         if (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)) {
             return 1;
         }

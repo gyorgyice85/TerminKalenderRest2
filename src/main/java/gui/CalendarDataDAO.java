@@ -1,6 +1,7 @@
-package database;
+package gui;
 
 import gui.Login;
+import gui.MemoCalendar;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,28 +28,8 @@ public class CalendarDataDAO {
     private static String password;
     private static String usernameDB;
 
-    public DBConnect(){
-        username = Login.username;
-        usernameDB = username;
-        initializeDB();
-    }
 
-    public void initializeDB(){
-        createUsernameTable();
-        createUsersTable();
-        addUserToDB();
-    }
-    //TODO ORDER METHODS BELOW IN ORDER OF CALLS
-    public static void connectToDB(){
-        try{
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://"+hostname+":"+port+"/"+dbName+"?autoReconnect=true&useSSL=false",dbUsername,dbPassword);
-            st = con.createStatement();
-            //System.out.println("Connected to: "+hostname);
-        }catch(Exception ex){
-            ex.printStackTrace();
-        }
-    }
+
 
     public static void createUsernameTable(){
         try{
