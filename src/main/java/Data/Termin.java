@@ -1,7 +1,8 @@
-package database;
+package Data;
 
 import DAO.EinladungDAO;
 import DAO.TeilnehmerDAO;
+import database.TimestampAdapter;
 import gui.TerminBox;
 
 import javax.xml.bind.annotation.XmlRootElement;

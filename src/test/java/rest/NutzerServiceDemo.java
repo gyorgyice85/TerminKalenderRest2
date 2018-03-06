@@ -1,8 +1,8 @@
 package rest;
 
 import client.NutzerHandle;
-import database.Nutzer;
-import database.Termin;
+import Data.Nutzer;
+import Data.Termin;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;

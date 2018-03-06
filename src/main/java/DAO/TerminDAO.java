@@ -1,12 +1,10 @@
 package DAO;
 
 import database.ConnectionHelper;
-import database.Termin;
-import gui.MemoCalendar;
+import Data.Termin;
 import gui.TerminBox;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 

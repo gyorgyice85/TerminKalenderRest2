@@ -1,4 +1,4 @@
-package database;
+package Data;
 
 import DAO.EinladungDAO;
 import DAO.TeilnehmerDAO;

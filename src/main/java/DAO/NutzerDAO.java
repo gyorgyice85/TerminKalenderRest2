@@ -1,7 +1,7 @@
 package DAO;
 
 import database.ConnectionHelper;
-import database.Nutzer;
+import Data.Nutzer;
 
 import java.sql.*;
 import java.util.ArrayList;

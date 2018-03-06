@@ -1,6 +1,7 @@
 package database;
 
 import DAO.TerminDAO;
+import Data.Termin;
 import org.junit.Before;
 import org.junit.Test;
 

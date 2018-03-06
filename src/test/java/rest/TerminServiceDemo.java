@@ -2,18 +2,15 @@ package rest;
 
 import client.NutzerHandle;
 import client.TerminHandle;
-import database.Nutzer;
-import database.Termin;
+import Data.Nutzer;
+import Data.Termin;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import webservices.KalenderServer;
 
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 

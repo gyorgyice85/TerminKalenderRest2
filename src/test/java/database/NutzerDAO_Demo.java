@@ -1,6 +1,7 @@
 package database;
 
 import DAO.NutzerDAO;
+import Data.Nutzer;
 import org.junit.Before;
 import org.junit.Test;
 

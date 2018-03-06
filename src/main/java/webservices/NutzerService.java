@@ -3,7 +3,8 @@ package webservices;
 import DAO.EinladungDAO;
 import DAO.NutzerDAO;
 import DAO.TeilnehmerDAO;
-import database.*;
+import Data.Nutzer;
+import Data.Termin;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;

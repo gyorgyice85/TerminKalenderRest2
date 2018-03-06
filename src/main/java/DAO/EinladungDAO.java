@@ -1,8 +1,8 @@
 package DAO;
 
 import database.ConnectionHelper;
-import database.Nutzer;
-import database.Termin;
+import Data.Nutzer;
+import Data.Termin;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
