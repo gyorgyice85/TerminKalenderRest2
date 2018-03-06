@@ -257,7 +257,13 @@ public class TerminBox {
 
         btnDate1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                text.setText(new TerminBox(frame).setPickedDate());
+                textField.setText(new TerminBox(frame).setPickedDate());
+            }
+        });
+
+        btnDate2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                textField_0.setText(new TerminBox(frame).setPickedDate());
             }
         });
 
