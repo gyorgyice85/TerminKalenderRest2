@@ -18,7 +18,7 @@ public class KalenderServer {
      */
     public static HttpServer startServer() {
         // create a resource config that scans for JAX-RS resources and providers
-        // in de.htwsaar.www package
+        // in webservices package
         final ResourceConfig rc = new ResourceConfig().packages("webservices");
 
         // create and start a new instance of grizzly http server

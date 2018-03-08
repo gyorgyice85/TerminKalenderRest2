@@ -10,6 +10,8 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
+import static webservices.EventsService.NONE;
+
 @Path(TermineService.webContextPath)
 public class TermineService {
 
@@ -145,7 +147,18 @@ public class TermineService {
     @POST
     @Path("{terminID}/eingeladene/{nutzerID}/annehmen")
     public void annehmen(@PathParam("terminID") int terminID, @PathParam("nutzerID") int nutzerID) {
+
+        int einlader = einladungDAO.getEinlader(nutzerID, terminID);
         einladungDAO.annehmen(nutzerID, terminID);
+
+        try {
+            // Create new simple message
+            EinladungEvent msg = new EinladungEvent(EinladungEvent.EinladungEventType.ANGENOMMEN, einlader, nutzerID, terminID);
+            // Put message into einladungMessageQueue
+            EventsService.einladungMessageQueue.put(msg);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -154,7 +167,18 @@ public class TermineService {
     @DELETE
     @Path("{terminID}/eingeladene/{nutzerID}")
     public void ablehnen(@PathParam("terminID") int terminID, @PathParam("nutzerID") int nutzerID) {
-         einladungDAO.ablehnen(nutzerID, terminID);
+
+        int einlader = einladungDAO.getEinlader(nutzerID, terminID);
+        einladungDAO.ablehnen(nutzerID, terminID);
+
+        try {
+            // Create new simple message
+            EinladungEvent msg = new EinladungEvent(EinladungEvent.EinladungEventType.ABGELEHNT, einlader, nutzerID, terminID);
+            // Put message into einladungMessageQueue
+            EventsService.einladungMessageQueue.put(msg);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -168,6 +192,15 @@ public class TermineService {
             @PathParam("terminID") int terminID) {
 
         einladungDAO.create(wer, wen, terminID);
+
+        try {
+            // Create new simple message
+            EinladungEvent msg = new EinladungEvent(EinladungEvent.EinladungEventType.EINLADUNG, wer, wen, terminID);
+            // Put message into einladungMessageQueue
+            EventsService.einladungMessageQueue.put(msg);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -181,5 +214,14 @@ public class TermineService {
             @PathParam("terminID") int terminID) {
 
         einladungDAO.create(wer, wen, terminID);
+
+        try {
+            // Create new simple message
+            EinladungEvent msg = new EinladungEvent(EinladungEvent.EinladungEventType.EINLADUNG, wer, wen, terminID);
+            // Put message into einladungMessageQueue
+            EventsService.einladungMessageQueue.put(msg);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

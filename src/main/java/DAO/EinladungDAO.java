@@ -4,6 +4,8 @@ import database.ConnectionHelper;
 import Data.Nutzer;
 import Data.Termin;
 
+import webservices.EventsService;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -56,6 +58,33 @@ public class EinladungDAO {
      */
     public boolean remove(Nutzer wen, Termin termin){
         return remove(wen.getId(), termin.getId());
+    }
+
+    /**
+     * Die Methode findet heraus, wer die Einladung verschickt hat.
+     * @param wen die eingeladete Person
+     * @return
+     */
+    public int getEinlader(int wen, int termin) {
+        Connection c = null;
+        try {
+            c = ConnectionHelper.getConnection();
+            PreparedStatement ps = c.prepareStatement
+                    ("SELECT wer FROM Einladungen WHERE WEN =? AND TERMIN = ?");
+            ps.setInt(1, wen);
+            ps.setInt(2, termin);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("wer");
+            } else {
+                return EventsService.NONE;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionHelper.close(c);
+        }
     }
 
     /**
