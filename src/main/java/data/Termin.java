@@ -13,30 +13,32 @@ import java.util.Objects;
 @XmlRootElement
 public class Termin {
 
-        private int id;
-        private Timestamp von;
-        private Timestamp bis;
-        private String beschreibung;
-        private String ort;
+    private int id;
+    private Timestamp von;
+    private Timestamp bis;
+    private String beschreibung;
+    private String ort;
 
 
     public Termin() {}
 
-    public Termin(int id, Timestamp von, Timestamp bis, String ort, String beschreibung) {
+    public Termin(int id, String beschreibung, String ort, Timestamp von, Timestamp bis) {
 
         this.id = id;
+        this.beschreibung = beschreibung;
+        this.ort = ort;
         this.von = von;
         this.bis = bis;
-        this.ort = ort;
-        this.beschreibung = beschreibung;
     }
 
-    public Termin(Timestamp von, Timestamp bis, String ort, String beschreibung) {
+    public Termin(String beschreibung, String ort, Timestamp von, Timestamp bis) {
 
+        this.beschreibung = beschreibung;
+        this.ort = ort;
         this.von = von;
         this.bis = bis;
-        this.ort = ort;
-        this.beschreibung = beschreibung;
+
+
     }
 
     @Override
@@ -130,6 +132,6 @@ public class Termin {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, von, bis, beschreibung, ort);
+        return Objects.hash(id, beschreibung, ort, von, bis);
     }
 }
