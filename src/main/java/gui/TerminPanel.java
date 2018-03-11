@@ -1,5 +1,6 @@
 package gui;
 
+import client.TerminHandle;
 import data.Termin;
 import webservices.TermineService;
 
@@ -8,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -125,7 +128,7 @@ public class TerminPanel extends JPanel {
      * @param timeType 0 or 1; startTime or endTime
      * @return true or false; validated and setted or not
      */
-     /*private Boolean setFormattedTime(Timestamp time, Integer timeType) {
+     private Boolean setFormattedTime(Timestamp time, Integer timeType) {
         Boolean validated = true;
         Timestamp formattedTime = new Timestamp(new Date().getTime());
 
@@ -153,7 +156,7 @@ public class TerminPanel extends JPanel {
         }
 
         return validated;
-    }*/
+    }
 
     /**
      * Inner class. Triggers an actionlistener when the <code>addAppointmentButton</code> is clicked.
@@ -181,9 +184,9 @@ public class TerminPanel extends JPanel {
                 validName = false;
             }
             // validate times
-            /*if (!setFormattedTime(von, 0) || !setFormattedTime(bis, 1)) {
+            if (!setFormattedTime(von, 0) || !setFormattedTime(bis, 1)) {
                 validTimes = false;
-            }*/
+            }
             if (validTimes) {
                 // is end time greater then start time
                 if (von.after(bis)) {
@@ -195,8 +198,8 @@ public class TerminPanel extends JPanel {
             if (validName && validTimes) {
                 // add appointment
                 Termin termin = new Termin(beschreibung, ort, von, bis);
-                TermineService terminService = new TermineService();
-                Termin insertedTermin = terminService.create(termin);
+                TerminHandle terminHandle = new TerminHandle();
+                terminHandle.create(termin);
                 // close frame
                 appointmentFrame.setVisible(false);
                 appointmentFrame.dispose();

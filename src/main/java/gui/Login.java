@@ -1,6 +1,5 @@
 package gui;
 
-import database.NutzerDAO;
 import data.Nutzer;
 import client.NutzerHandle;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -13,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 public class Login {
 
@@ -29,8 +29,8 @@ public class Login {
     private HttpServer server;
     private WebTarget target;
 
-    private NutzerDAO nutzerDAO;
     private NutzerHandle nutzerHandle;
+
 
 
     /**
@@ -86,6 +86,7 @@ public class Login {
      * Initialize the contents of the frame.
      */
     public void initialize() {
+
         frame = new JFrame();
         frame.setBounds(800, 500, 800, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,34 +96,37 @@ public class Login {
         lblUsername.setBounds(270, 105, 400, 80);
         frame.getContentPane().add(lblUsername);
 
-        Nutzer erstellterNutzer = nutzerHandle.create(new Nutzer("Peter", "Musterman"));
+        List<Nutzer> nutzers = nutzerHandle.findAll();
         final JComboBox<Nutzer> comboBox = new JComboBox<>();
-        comboBox.addItem(erstellterNutzer);
-        comboBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
+            for (Integer i = 0; i < nutzers.size(); i++) {
+                nutzerHandle.findAll();
+                Nutzer nutzer = nutzers.get(i);
+
+                comboBox.addItem(nutzer);
+                comboBox.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent arg0) {
+                    }
+                });
+                comboBox.setBounds(220, 220, 340, 30);
+                frame.getContentPane().add(comboBox);
             }
-        });
-        comboBox.setBounds(220, 220, 340, 30);
-        frame.getContentPane().add(comboBox);
 
 
-        JButton btnLogin = new JButton("Login");
-        btnLogin.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent arg0) {
+            JButton btnLogin = new JButton("Login");
+            btnLogin.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent arg0) {
 
-
-                if(comboBox.getSelectedItem().equals("Select")/*txtUsername.getText().isEmpty()*/) {
-                    JOptionPane.showMessageDialog(null, "Invalid Login Details",
-                            "Login Error", JOptionPane.ERROR_MESSAGE);
+                    if (comboBox.getSelectedItem().equals("Select")/*txtUsername.getText().isEmpty()*/) {
+                        JOptionPane.showMessageDialog(null, "Invalid Login Details",
+                                "Login Error", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        MainFrame window = new MainFrame();
+                        window.setVisible(true);
+                    }
                 }
-                else {
-                    MainFrame window = new MainFrame();
-                    window.setVisible(true);
-                }
-            }
-        });
-        btnLogin.setBounds(250, 350, 89, 30);
-        frame.getContentPane().add(btnLogin);
+            });
+            btnLogin.setBounds(250, 350, 89, 30);
+            frame.getContentPane().add(btnLogin);
 
         btnRegistration = new JButton("Registration");
         btnRegistration.addActionListener(new ActionListener() {

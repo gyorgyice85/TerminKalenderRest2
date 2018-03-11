@@ -1,8 +1,7 @@
 package gui;
 
 import calendar.CalendarData;
-import database.TerminDAO;
-//import Data.manager.CalendarManager;
+import client.TerminHandle;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
@@ -18,16 +17,14 @@ public class MainFrame extends JFrame {
     public Integer frameWidth, frameHeight;
     public MainPanel mainPanel;
     public CalendarData calendar;
-    public TerminDAO terminDAO;
-    //public CalendarManager manager;
+    public TerminHandle terminHandle;
 
     /**
      * Constructor. Calls the initialization of the frame, calendar and manager.
      */
     public MainFrame() {
         calendar = new CalendarData();
-        terminDAO = new TerminDAO();
-        //manager = new CalendarManager();
+        terminHandle = new TerminHandle();
         initFrame();
     }
 

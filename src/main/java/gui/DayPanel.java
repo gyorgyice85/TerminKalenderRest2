@@ -1,7 +1,7 @@
 package gui;
 
 import data.Termin;
-import database.TerminDAO;
+import client.TerminHandle;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -24,8 +24,7 @@ public class DayPanel extends JPanel {
     private JButton viewAppointmentsButton, addAppointmentsButton;
     public List<Termin> appointments;
     private Date date;
-    //private CalendarManager manager = new CalendarManager();
-    private TerminDAO terminDAO = new TerminDAO();
+    private TerminHandle terminHandle = new TerminHandle();
     private Integer appointmentsCount;
 
     /**
@@ -43,7 +42,7 @@ public class DayPanel extends JPanel {
         this.calendarPanel = calendarPanel;
         this.index = index;
         date = calendarPanel.mainPanel.mainFrame.calendar.getDate(month, day, year);
-        appointments = terminDAO.findAll();
+        appointments = terminHandle.findAll();
         appointmentsCount = appointments.size();
 
         drawDayPanel();

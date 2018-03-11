@@ -19,7 +19,7 @@ import java.awt.event.ComponentEvent;
 public class MainPanel extends JPanel {
     private static Integer TOP_PANEL_HEIGHT = 75;
     private Integer topPanelWidth;
-    private JButton prevMonthButton, nextMonthButton, currentMonthButton;
+    private JButton einladungButton, prevMonthButton, nextMonthButton, currentMonthButton;
     private JPanel topPanel, navigationButtonPanel; // for now private
     public CalendarPanel calendarPanel;
     public DayDetailPanel dayDetailPanel;
@@ -57,6 +57,8 @@ public class MainPanel extends JPanel {
         topPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.decode("#E2E2E2")));
 
         // buttons
+        einladungButton = new JButton("Einladen");
+        einladungButton.addActionListener(new einladungButtonHandler());
         prevMonthButton = new JButton("<");
         prevMonthButton.addActionListener(new prevMonthButtonHandler());
         currentMonthButton = new JButton("Today");
@@ -102,6 +104,7 @@ public class MainPanel extends JPanel {
         navigationButtonPanel.add(prevMonthButton);
         navigationButtonPanel.add(currentMonthButton);
         navigationButtonPanel.add(nextMonthButton);
+        navigationButtonPanel.add(einladungButton);
         topPanel.add(navigationButtonPanel);
 
         topPanel.add(sundayLabel);
@@ -212,6 +215,12 @@ public class MainPanel extends JPanel {
         }
     }
 
+    class einladungButtonHandler implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            Einladung window = new Einladung();
+            window.frame.setVisible(true);
+        }
+    }
     /**
      * Inner class. Triggers an actionlistener when previous button is clicked.
      */

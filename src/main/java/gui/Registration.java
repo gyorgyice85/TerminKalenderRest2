@@ -38,7 +38,7 @@ public class Registration {
         }
 
     public static Font loadFont(String name, float size){
-        InputStream is = Login.class.getResourceAsStream("/resources/"+name);
+        InputStream is = Registration.class.getResourceAsStream("/resources/"+name);
         Font title = null;
         try {
             title = Font.createFont(Font.TRUETYPE_FONT, is);
@@ -104,8 +104,8 @@ public class Registration {
                     else {
                         Boolean validName = true;
 
-                        String nachName = textField_1.getText();
-                        String vorName = textField_2.getText();
+                        String vorName = textField_1.getText();
+                        String nachName = textField_2.getText();
 
                         // validate name
                         if (nachName == null || nachName.isEmpty()) {
@@ -120,7 +120,7 @@ public class Registration {
                         if (validName) {
                             Nutzer nutzer = new Nutzer(nachName, vorName);
                             NutzerHandle nutzerHandler = new NutzerHandle();
-                            Nutzer insertedNutzer = nutzerHandler.create(nutzer);
+                            nutzerHandler.create(nutzer);
 
                             JOptionPane.showMessageDialog(null, "Data Submitted");
                             MainFrame window = new MainFrame();

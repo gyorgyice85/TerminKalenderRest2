@@ -1,7 +1,7 @@
 package gui;
 
 import data.Termin;
-import database.TerminDAO;
+import client.TerminHandle;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -22,8 +22,7 @@ public class DayDetailPanel extends JPanel {
     private Integer day, month, year;
     private Integer dayDetailPanelWidth, dayDetailPanelHeight;
     private MainPanel mainPanel;
-    //private CalendarManager manager = new CalendarManager();
-    private TerminDAO terminDAO = new TerminDAO();
+    private TerminHandle terminHandle = new TerminHandle();
     private List<Termin> appointments;
     private JScrollPane scrollPane;
 
@@ -35,7 +34,7 @@ public class DayDetailPanel extends JPanel {
         month = mainPanel.mainFrame.calendar.month.getActiveMonth();
         day = mainPanel.mainFrame.calendar.day.getActiveDay();
         year = mainPanel.mainFrame.calendar.year.getActiveYear();
-        appointments = terminDAO.findAll();
+        appointments = terminHandle.findAll();
 
         drawDayDetailPanel();
     }
@@ -97,7 +96,7 @@ public class DayDetailPanel extends JPanel {
         month = mainPanel.mainFrame.calendar.month.getActiveMonth();
         day = mainPanel.mainFrame.calendar.day.getActiveDay();
         year = mainPanel.mainFrame.calendar.year.getActiveYear();
-        appointments = terminDAO.findAll();
+        appointments = terminHandle.findAll();
 
         removeAll();
         drawDayDetailPanel();
@@ -127,13 +126,13 @@ public class DayDetailPanel extends JPanel {
             for (Integer i = 0; i < appointments.size(); i++) {
                 Termin appointment = appointments.get(i);
 
-                Boolean hasLocation = true;
-                Boolean hasDescription = true;
+                Boolean hasOrt = true;
+                Boolean hasBeschreibung = true;
                 if (appointment.getOrt() == null) {
-                    hasLocation = false;
+                    hasOrt = false;
                 }
                 if (appointment.getBeschreibung() == null) {
-                    hasDescription = false;
+                    hasBeschreibung = false;
                 }
 
                 // components
@@ -152,13 +151,13 @@ public class DayDetailPanel extends JPanel {
                 JPanel appointmentPanel = new JPanel();
                 appointmentPanel.setLayout(new BoxLayout(appointmentPanel, BoxLayout.Y_AXIS));
                 appointmentPanel.add(time);
-                if (hasLocation) {
-                    JLabel location = new JLabel("Location: "+appointment.getOrt());
+                if (hasOrt) {
+                    JLabel location = new JLabel("Ort: "+appointment.getOrt());
                     location.setBorder(spacingBorder);
                     appointmentPanel.add(location);
                 }
-                if (hasDescription) {
-                    JLabel description = new JLabel("Notes: "+appointment.getBeschreibung());
+                if (hasBeschreibung) {
+                    JLabel description = new JLabel("Beschreibung: "+appointment.getBeschreibung());
                     description.setBorder(spacingBorder);
                     appointmentPanel.add(description);
                 }
@@ -203,7 +202,7 @@ public class DayDetailPanel extends JPanel {
 
             if (dialogResult == JOptionPane.YES_OPTION) {
                 // delete appointment
-                terminDAO.remove(appointmentId);
+                terminHandle.remove(appointmentId);
                 // redraw panels
                 mainPanel.calendarPanel.monthPanel.redrawMonthPanel();
                 mainPanel.dayDetailPanel.redrawDayDetailPanel();
