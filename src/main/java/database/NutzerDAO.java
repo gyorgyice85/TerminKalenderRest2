@@ -1,21 +1,17 @@
-package DAO;
+package database;
 
-import database.ConnectionHelper;
-import Data.Termin;
-import gui.TerminBox;
+import data.Nutzer;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TerminDAO {
+public class NutzerDAO {
 
-    TerminBox terminBox = new TerminBox();
-
-    public List<Termin> findAll() {
-        List<Termin> list = new ArrayList<Termin>();
+    public List<Nutzer> findAll() {
+        List<Nutzer> list = new ArrayList<Nutzer>();
         Connection c = null;
-        String sql = "SELECT * FROM Termin";
+        String sql = "SELECT * FROM Nutzer";
         try {
             c = ConnectionHelper.getConnection();
             Statement s = c.createStatement();
@@ -32,16 +28,19 @@ public class TerminDAO {
         return list;
     }
 
-    public List<Termin> findByBeschreibung(String beschreibung) {
-        List<Termin> list = new ArrayList<Termin>();
+    public List<Nutzer> findByName(String vorname, String nachname) {
+        List<Nutzer> list = new ArrayList<Nutzer>();
         Connection c = null;
-        String sql = "SELECT * FROM Termin WHERE Beschreibung LIKE '%'|| ? || '%'";
+        String sql = "SELECT * FROM Nutzer " +
+                "WHERE Vorname LIKE '%'|| ? || '%'" +
+                " AND Nachname LIKE '%'|| ? || '%'";
         try {
             c = ConnectionHelper.getConnection();
             // prepareStatement creates a PreparedStatement object for sending
             // parameterized SQL statements to the database.
             PreparedStatement ps = c.prepareStatement(sql);
-            ps.setString(1, beschreibung);
+            ps.setString(1, vorname);
+            ps.setString(2, nachname);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(processRow(rs));
@@ -55,9 +54,9 @@ public class TerminDAO {
         return list;
     }
 
-    public Termin findById(int id) {
-        String sql = "SELECT * FROM Termin WHERE id = ?";
-        Termin termin = null;
+    public Nutzer findById(int id) {
+        String sql = "SELECT * FROM Nutzer WHERE id = ?";
+        Nutzer nutzer = null;
         Connection c = null;
         try {
             c = ConnectionHelper.getConnection();
@@ -65,7 +64,7 @@ public class TerminDAO {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                termin = processRow(rs);
+                nutzer = processRow(rs);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,56 +72,48 @@ public class TerminDAO {
         } finally {
             ConnectionHelper.close(c);
         }
-        return termin;
+        return nutzer;
     }
 
 
-   //
-    public Termin create(Termin termin) {
-
-
+    public Nutzer create(Nutzer nutzer) {
         Connection c = null;
         PreparedStatement ps = null;
         try {
             c = ConnectionHelper.getConnection();
-            ps = c.prepareStatement("INSERT INTO Termin (Beschreibung, Ort, Von, Bis) VALUES (?, ?, ?, ?)",
+            ps = c.prepareStatement("INSERT INTO Nutzer(Vorname, Nachname) VALUES (?, ?)",
                     new String[] { "ID" });
-            ps.setString(1, termin.getBeschreibung());
-            ps.setString(2, termin.getOrt());
-            ps.setTimestamp(3, termin.getVon());
-            ps.setTimestamp(4, termin.getBis());
+            ps.setString(1, nutzer.getVorname());
+            ps.setString(2, nutzer.getNachname());
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
             rs.next();
             // Update the id in the returned object. This is important as this value must be returned to the client.
             int id = rs.getInt(1);
-            termin.setId(id);
+            nutzer.setId(id);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
         } finally {
             ConnectionHelper.close(c);
         }
-        return termin;
+        return nutzer;
     }
 
-    public Termin save(Termin termin) {
-        return termin.getId() > 0 ? update(termin) : create(termin);
+    public Nutzer save(Nutzer nutzer) {
+        return nutzer.getId() > 0 ? update(nutzer) : create(nutzer);
     }
 
 
-    public Termin update(Termin termin) {
-
+    public Nutzer update(Nutzer nutzer) {
         Connection c = null;
         try {
             c = ConnectionHelper.getConnection();
             PreparedStatement ps = c.prepareStatement
-                    ("UPDATE Termin SET Beschreibung =?, Ort =?, Von =?, Bis =? WHERE id =?");
-            ps.setString(1, termin.getBeschreibung());
-            ps.setString(2, termin.getOrt());
-            ps.setTimestamp(3, termin.getVon());
-            ps.setTimestamp(4, termin.getBis());
-            ps.setInt(5, termin.getId());
+                    ("UPDATE Nutzer SET Vorname =?, Nachname =? WHERE id =?");
+            ps.setString(1, nutzer.getVorname());
+            ps.setString(2, nutzer.getNachname());
+            ps.setInt(3, nutzer.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,17 +121,17 @@ public class TerminDAO {
         } finally {
             ConnectionHelper.close(c);
         }
-        return termin;
+        return nutzer;
     }
 
     /**
-    @return whether deleting the row was successful
-    */
+     @return whether deleting the row was successful
+     */
     public boolean remove(int id) {
         Connection c = null;
         try {
             c = ConnectionHelper.getConnection();
-            PreparedStatement ps = c.prepareStatement("DELETE FROM Termin WHERE id=?");
+            PreparedStatement ps = c.prepareStatement("DELETE FROM Nutzer WHERE id=?");
             ps.setInt(1, id);
             int count = ps.executeUpdate();
             return count == 1;
@@ -152,17 +143,17 @@ public class TerminDAO {
         }
     }
 
-    Termin processRow(ResultSet rs) throws SQLException {
-        Termin termin = new Termin();
-        termin.setId(rs.getInt("ID"));
-        termin.setBeschreibung(rs.getString("Beschreibung"));
-        termin.setOrt(rs.getString("Ort"));
-        termin.setVon(rs.getTimestamp("Von"));
-        termin.setBis(rs.getTimestamp("Bis"));
 
+    Nutzer processRow(ResultSet rs) throws SQLException {
+        Nutzer nutzer = new Nutzer();
+        nutzer.setId(rs.getInt("ID"));
+        nutzer.setVorname(rs.getString("Vorname"));
+        nutzer.setNachname(rs.getString("Nachname"));
 
-        return termin;
+        return nutzer;
     }
 
 
+
 }
+

@@ -1,16 +1,14 @@
 package webservices;
 
-import DAO.EinladungDAO;
-import DAO.TeilnehmerDAO;
-import DAO.TerminDAO;
-import Data.Nutzer;
-import Data.Termin;
+import database.EinladungDAO;
+import database.TeilnehmerDAO;
+import database.TerminDAO;
+import data.Nutzer;
+import data.Termin;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
-
-import static webservices.EventsService.NONE;
 
 @Path(TermineService.webContextPath)
 public class TermineService {

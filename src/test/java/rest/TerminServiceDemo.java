@@ -2,8 +2,8 @@ package rest;
 
 import client.NutzerHandle;
 import client.TerminHandle;
-import Data.Nutzer;
-import Data.Termin;
+import data.Nutzer;
+import data.Termin;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.After;
 import org.junit.Before;
@@ -33,7 +33,7 @@ public class TerminServiceDemo {
 
     @After
     public void tearDown() {
-        server.stop();
+        server.shutdown();
     }
 
     @Test

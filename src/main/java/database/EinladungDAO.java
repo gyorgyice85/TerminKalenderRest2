@@ -1,8 +1,7 @@
-package DAO;
+package database;
 
-import database.ConnectionHelper;
-import Data.Nutzer;
-import Data.Termin;
+import data.Nutzer;
+import data.Termin;
 
 import webservices.EventsService;
 

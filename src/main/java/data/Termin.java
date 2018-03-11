@@ -1,14 +1,12 @@
-package Data;
+package data;
 
-import DAO.EinladungDAO;
-import DAO.TeilnehmerDAO;
+import database.EinladungDAO;
+import database.TeilnehmerDAO;
 import database.TimestampAdapter;
-import gui.TerminBox;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,8 +18,6 @@ public class Termin {
         private Timestamp bis;
         private String beschreibung;
         private String ort;
-
-        private TerminBox terminBox;
 
 
     public Termin() {}
@@ -87,9 +83,7 @@ public class Termin {
 
     @XmlJavaTypeAdapter(TimestampAdapter.class)
     public Timestamp getVon() {
-        Date dateFrom = terminBox.getFrom();
-        Timestamp timestamp = new Timestamp(dateFrom.getTime());
-        return timestamp;
+        return von;
     }
 
     public void setVon(Timestamp von) {
@@ -98,9 +92,7 @@ public class Termin {
 
     @XmlJavaTypeAdapter(TimestampAdapter.class)
     public Timestamp getBis() {
-        Date dateUntil = terminBox.getUntil();
-        Timestamp timestamp = new Timestamp(dateUntil.getTime());
-        return timestamp;
+        return bis;
     }
 
     public void setBis(Timestamp bis) {
@@ -108,8 +100,7 @@ public class Termin {
     }
 
     public String getOrt() {
-        String str = terminBox.getWhere();
-        return str;
+        return ort;
     }
 
     public void setOrt(String ort) {
@@ -117,8 +108,7 @@ public class Termin {
     }
 
     public String getBeschreibung() {
-       String str = terminBox.getBeschreibung();
-       return str;
+        return beschreibung;
     }
 
     public void setBeschreibung(String beschreibung) {

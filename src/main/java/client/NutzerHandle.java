@@ -1,7 +1,7 @@
 package client;
 
-import Data.Nutzer;
-import Data.Termin;
+import data.Nutzer;
+import data.Termin;
 import webservices.KalenderServer;
 
 import javax.ws.rs.client.Client;

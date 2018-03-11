@@ -126,9 +126,9 @@ public class Registration {
             btnSubmit.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     if(textField.getText().isEmpty()||(textField_2.getText().isEmpty())||((radioButton_1.isSelected())&&(radioButton.isSelected()))/*||(comboBox.getSelectedItem().equals("Select"))*/)
-                        JOptionPane.showMessageDialog(null, "Data Missing");
+                        JOptionPane.showMessageDialog(null, "data Missing");
                     else
-                        JOptionPane.showMessageDialog(null, "Data Submitted");
+                        JOptionPane.showMessageDialog(null, "data Submitted");
                     CalendarProgram.display();
                 }
             });

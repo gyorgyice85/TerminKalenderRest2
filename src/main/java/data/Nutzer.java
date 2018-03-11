@@ -1,8 +1,7 @@
-package Data;
+package data;
 
-import DAO.EinladungDAO;
-import DAO.TeilnehmerDAO;
-import gui.Registration;
+import database.EinladungDAO;
+import database.TeilnehmerDAO;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
@@ -14,8 +13,6 @@ public class Nutzer{
     private int id;
     private String vorname;
     private String nachname;
-
-    private Registration registration;
 
     public Nutzer() {};
 
@@ -78,8 +75,7 @@ public class Nutzer{
     }
 
     public String getVorname() {
-        String str = registration.getVorname();
-        return str;
+        return vorname;
     }
 
     public void setVorname(String vorname) {
@@ -87,9 +83,7 @@ public class Nutzer{
     }
 
     public String getNachname() {
-
-        String str = registration.getNachname();
-        return str;
+        return nachname;
     }
 
     public void setNachname(String nachname) {

@@ -2,8 +2,8 @@ package rest;
 
 import client.NutzerHandle;
 import client.TerminHandle;
-import database.Nutzer;
-import database.Termin;
+import data.Nutzer;
+import data.Termin;
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.junit.*;
 import webservices.EinladungEvent;
@@ -33,7 +33,7 @@ public class EventsDemo {
 
     @After
     public void tearDown() {
-        server.stop();
+        server.shutdown();
     }
 
     @Test
