@@ -26,12 +26,6 @@ public class TerminPanel extends JPanel {
     private JFrame appointmentFrame;
     private CalendarPanel calendarPanel;
     private JTextField beschreibungTextField, ortTextField, vonTextField, bisTextField;
-    private Timestamp formattedStartTime, formattedEndTime;
-
-    public Timestamp von;
-    public Timestamp bis;
-    public String beschreibung;
-    public String ort;
 
     /**
      * Constructor. Sets the global variables and calls the draw method.
@@ -109,7 +103,7 @@ public class TerminPanel extends JPanel {
     private void showTimeError() {
         JOptionPane.showMessageDialog(null,
                 "The start time or end time are invalid.\n" +
-                        "Allowed format: (00 through 23) : (00 through 59).\n" +
+                        "Allowed format: JJJJ-MM-TT HH:MM:SS.\n" +
                         "End time must be greater than start time.", "Invalid times",
                 JOptionPane.ERROR_MESSAGE);
     }
@@ -120,42 +114,6 @@ public class TerminPanel extends JPanel {
      */
     private void showSuccesMessage(String beschreibung) {
         JOptionPane.showMessageDialog(null, "Your event \""+beschreibung+"\" is succesfully added.", "Event added", JOptionPane.PLAIN_MESSAGE);
-    }
-
-    /**
-     * Sets the global formatted time variables, based on a time string
-     * @param time 4 digit time as a string
-     * @param timeType 0 or 1; startTime or endTime
-     * @return true or false; validated and setted or not
-     */
-     private Boolean setFormattedTime(Timestamp time, Integer timeType) {
-        Boolean validated = true;
-        Timestamp formattedTime = new Timestamp(new Date().getTime());
-
-        // format time
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-
-        try {
-            new SimpleDateFormat("HH:mm").parse(String.valueOf(time));
-            // good format
-            formattedTime = new Timestamp(formatter.parse(String.valueOf(time)).getTime());
-        } catch (ParseException e) {
-            // bad format
-            validated = false;
-        } finally {
-            if (validated) {
-                if (timeType == 0) {
-                    // start time
-                    formattedStartTime = formattedTime;
-                }
-                else if (timeType == 1){
-                    // end time
-                    formattedEndTime = formattedTime;
-                }
-            }
-        }
-
-        return validated;
     }
 
     /**
@@ -183,10 +141,7 @@ public class TerminPanel extends JPanel {
             if (beschreibung == null || beschreibung.isEmpty()) {
                 validName = false;
             }
-            // validate times
-            if (!setFormattedTime(von, 0) || !setFormattedTime(bis, 1)) {
-                validTimes = false;
-            }
+
             if (validTimes) {
                 // is end time greater then start time
                 if (von.after(bis)) {

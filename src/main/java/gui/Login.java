@@ -107,7 +107,7 @@ public class Login {
                     public void actionPerformed(ActionEvent arg0) {
                     }
                 });
-                comboBox.setBounds(220, 220, 340, 30);
+                comboBox.setBounds(200, 220, 400, 30);
                 frame.getContentPane().add(comboBox);
             }
 
