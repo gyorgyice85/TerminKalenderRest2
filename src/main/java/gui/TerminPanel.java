@@ -1,8 +1,10 @@
 package gui;
 
+import client.NutzerHandle;
 import client.TerminHandle;
+import data.Nutzer;
 import data.Termin;
-import webservices.TermineService;
+import javafx.scene.control.ComboBox;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,9 +12,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The <code>AppointmentPanel</code> ensures the panel of the <code>AppointmentFrame</code>.
@@ -25,7 +27,10 @@ public class TerminPanel extends JPanel {
     private Date date;
     private JFrame appointmentFrame;
     private CalendarPanel calendarPanel;
-    private JTextField beschreibungTextField, ortTextField, vonTextField, bisTextField;
+    private JTextField nameTextField, placeTextField, startTimeTextField, endTimeTextField, inviteTextField;
+    private JComboBox<Nutzer> inviteComboBox;
+    private NutzerHandle nutzerHandle;
+
 
     /**
      * Constructor. Sets the global variables and calls the draw method.
@@ -47,7 +52,7 @@ public class TerminPanel extends JPanel {
      */
     public void drawAppointmentPanel() {
         setLayout(new SpringLayout());
-        String[] labels = {"Beschreibung", "Ort", "von", "bis", ""};
+        String[] labels = {"Name", "Place", "Start Time", "End Time", "Invite", ""};
         int numPairs = labels.length;
 
         JButton saveButton = new JButton("Save");
@@ -56,14 +61,23 @@ public class TerminPanel extends JPanel {
 
         ArrayList<JTextField> textFieldList = listTextFields();
 
+       /* List<Nutzer> nutzers = nutzerHandle.findAll();
+        inviteComboBox = new JComboBox<>();
+        for (Integer i = 0; i < nutzers.size(); i++) {
+            nutzerHandle.findAll();
+            Nutzer nutzer = nutzers.get(i);
+            inviteComboBox.addItem(nutzer);
+        }
+*/
         // fill the panel
         for (int i = 0; i < numPairs; i++) {
             JLabel l = new JLabel(labels[i], JLabel.TRAILING);
             add(l);
             if (i+1 < numPairs) {
                 add(textFieldList.get(i));
-            }
-            else {
+            //} else if (i == (numPairs-1)) {
+                //add(inviteComboBox);
+            } else {
                 add(saveButton);
             }
         }
@@ -71,8 +85,8 @@ public class TerminPanel extends JPanel {
         // lay out the panel
         SpringUtilities.makeCompactGrid(this,
                 numPairs, 2, //rows, cols
-                10, 10, //initX, initY
-                10, 10 //xPad, yPad
+                20, 20, //initX, initY
+                20, 20 //xPad, yPad
         );
     }
 
@@ -82,10 +96,11 @@ public class TerminPanel extends JPanel {
      */
     private ArrayList<JTextField> listTextFields() {
         ArrayList<JTextField> textFieldList  = new ArrayList<>();
-        textFieldList.add(beschreibungTextField = new JTextField());
-        textFieldList.add(ortTextField = new JTextField());
-        textFieldList.add(vonTextField = new JTextField());
-        textFieldList.add(bisTextField = new JTextField());
+        textFieldList.add(nameTextField = new JTextField());
+        textFieldList.add(placeTextField = new JTextField());
+        textFieldList.add(startTimeTextField = new JTextField());
+        textFieldList.add(endTimeTextField = new JTextField());
+        textFieldList.add(inviteTextField = new JTextField());
 
         return textFieldList;
     }
@@ -110,10 +125,10 @@ public class TerminPanel extends JPanel {
 
     /**
      * Shows an message dialog when an event is succesfully added.
-     * @param beschreibung the name of the event.
+     * @param name the name of the event.
      */
-    private void showSuccesMessage(String beschreibung) {
-        JOptionPane.showMessageDialog(null, "Your event \""+beschreibung+"\" is succesfully added.", "Event added", JOptionPane.PLAIN_MESSAGE);
+    private void showSuccesMessage(String name) {
+        JOptionPane.showMessageDialog(null, "Your event \""+name+"\" is succesfully added.", "Event added", JOptionPane.PLAIN_MESSAGE);
     }
 
     /**
@@ -129,22 +144,22 @@ public class TerminPanel extends JPanel {
             Boolean validTimes = true;
 
             // get values
-            String beschreibung = beschreibungTextField.getText();
-            String ort = ortTextField.getText();
-            Timestamp von = Timestamp.valueOf(vonTextField.getText()); // remove whitespace
-            Timestamp bis = Timestamp.valueOf(bisTextField.getText());
+            String name = nameTextField.getText();
+            String place = placeTextField.getText();
+            Timestamp startTime = Timestamp.valueOf(startTimeTextField.getText()); // remove whitespace
+            Timestamp endTime = Timestamp.valueOf(endTimeTextField.getText());
 
-            // fields to null of not filled in
-            if (ort.isEmpty()) { ort = null; }
+            // validate place
+            if (place.isEmpty()) { place = null; }
 
             // validate name
-            if (beschreibung == null || beschreibung.isEmpty()) {
+            if (name == null || name.isEmpty()) {
                 validName = false;
             }
 
             if (validTimes) {
                 // is end time greater then start time
-                if (von.after(bis)) {
+                if (startTime.after(endTime)) {
                     validTimes = false;
                 }
             }
@@ -152,7 +167,7 @@ public class TerminPanel extends JPanel {
 
             if (validName && validTimes) {
                 // add appointment
-                Termin termin = new Termin(beschreibung, ort, von, bis);
+                Termin termin = new Termin(name, place, startTime, endTime);
                 TerminHandle terminHandle = new TerminHandle();
                 terminHandle.create(termin);
                 // close frame
@@ -160,7 +175,7 @@ public class TerminPanel extends JPanel {
                 appointmentFrame.dispose();
                 // repaint panels and show succes message
                 calendarPanel.monthPanel.redrawMonthPanel();
-                showSuccesMessage(beschreibung);
+                showSuccesMessage(name);
             }
             else {
                 // show errors

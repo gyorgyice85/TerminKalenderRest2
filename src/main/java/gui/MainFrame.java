@@ -56,9 +56,6 @@ public class MainFrame extends JFrame {
         setContentPane(mainPanel);
         setLocationRelativeTo(null);
 
-        // add menubar
-        //setJMenuBar(getCustomMenuBar());
-
         setResizable(false);
         pack();
         setVisible(true);
@@ -99,36 +96,4 @@ public class MainFrame extends JFrame {
         }
     }
 
-    /**
-     * Draws a menubar in the <code>MainFrame</code>.
-     * @return
-     */
-    private JMenuBar getCustomMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-
-        JMenu menu = new JMenu("About");
-        menu.addMenuListener(new MenuListener() {
-            @Override
-            public void menuSelected(MenuEvent e) {
-                JOptionPane.showMessageDialog(null,
-                        "Java Calendar\n" +
-                                "Version: 1.0\n" +
-                                "Author: Bram de Hart\n" +
-                                "develop@bramdehart.nl\n\n"+
-                                "github.com/bramdh\n" +
-                                "linkedin.com/in/bramdehart", "About Java Calendar",
-                        JOptionPane.PLAIN_MESSAGE);
-            }
-            @Override
-            public void menuDeselected(MenuEvent e) {
-            }
-            @Override
-            public void menuCanceled(MenuEvent e) {
-            }
-        });
-
-        menuBar.add(menu);
-
-        return menuBar;
-    }
 }

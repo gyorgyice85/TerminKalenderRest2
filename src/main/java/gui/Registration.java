@@ -66,7 +66,7 @@ public class Registration {
             frame.getContentPane().setLayout(null);
 
 
-            JLabel lblNachname = new JLabel("Nachname");
+            JLabel lblNachname = new JLabel("Last name:");
             lblNachname.setBounds(150, 120, 100, 30);
             frame.getContentPane().add(lblNachname);
 
@@ -75,7 +75,7 @@ public class Registration {
             frame.getContentPane().add(textField_1);
             textField_1.setColumns(10);
 
-            JLabel lblVorname = new JLabel("Vorname");
+            JLabel lblVorname = new JLabel("First name:");
             lblVorname.setBounds(150, 220, 100, 30);
             frame.getContentPane().add(lblVorname);
 
@@ -125,6 +125,7 @@ public class Registration {
                             JOptionPane.showMessageDialog(null, "Data Submitted");
                             MainFrame window = new MainFrame();
                             window.setVisible(true);
+                            frame.dispose();
                         }
                     }
                 }

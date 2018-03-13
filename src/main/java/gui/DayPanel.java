@@ -103,11 +103,11 @@ public class DayPanel extends JPanel {
      * @return the color code
      */
     private String getAppointmentsBackground(Integer appointmentsCount) {
-        String backgroundHash = "#FFB312";
+        String backgroundHash = "#FFDAB9";
         if (appointmentsCount > 5) {
-            backgroundHash = "#FF6600";
+            backgroundHash = "#FF6347";
             if (appointmentsCount > 10) {
-                backgroundHash = "#EE3230";
+                backgroundHash = "#CD5C5C";
             }
         }
 

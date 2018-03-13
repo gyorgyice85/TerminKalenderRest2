@@ -151,16 +151,17 @@ public class DayDetailPanel extends JPanel {
                 JPanel appointmentPanel = new JPanel();
                 appointmentPanel.setLayout(new BoxLayout(appointmentPanel, BoxLayout.Y_AXIS));
                 appointmentPanel.add(time);
-                if (hasOrt) {
-                    JLabel location = new JLabel("Ort: "+appointment.getOrt());
-                    location.setBorder(spacingBorder);
-                    appointmentPanel.add(location);
-                }
                 if (hasBeschreibung) {
-                    JLabel description = new JLabel("Beschreibung: "+appointment.getBeschreibung());
+                    JLabel description = new JLabel("Name: "+appointment.getBeschreibung());
                     description.setBorder(spacingBorder);
                     appointmentPanel.add(description);
                 }
+                if (hasOrt) {
+                    JLabel location = new JLabel("Place: "+appointment.getOrt());
+                    location.setBorder(spacingBorder);
+                    appointmentPanel.add(location);
+                }
+
                 appointmentPanel.add(deleteButton);
 
                 appointmentPanel.setOpaque(false);

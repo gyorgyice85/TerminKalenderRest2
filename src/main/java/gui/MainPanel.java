@@ -19,7 +19,7 @@ import java.awt.event.ComponentEvent;
 public class MainPanel extends JPanel {
     private static Integer TOP_PANEL_HEIGHT = 75;
     private Integer topPanelWidth;
-    private JButton einladungButton, prevMonthButton, nextMonthButton, currentMonthButton;
+    private JButton invitationButton, prevMonthButton, nextMonthButton, currentMonthButton;
     private JPanel topPanel, navigationButtonPanel; // for now private
     public CalendarPanel calendarPanel;
     public DayDetailPanel dayDetailPanel;
@@ -57,8 +57,8 @@ public class MainPanel extends JPanel {
         topPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.decode("#E2E2E2")));
 
         // buttons
-        einladungButton = new JButton("Einladen");
-        einladungButton.addActionListener(new einladungButtonHandler());
+        invitationButton = new JButton("Invitation");
+        invitationButton.addActionListener(new invitationButtonHandler());
         prevMonthButton = new JButton("<");
         prevMonthButton.addActionListener(new prevMonthButtonHandler());
         currentMonthButton = new JButton("Today");
@@ -104,7 +104,7 @@ public class MainPanel extends JPanel {
         navigationButtonPanel.add(prevMonthButton);
         navigationButtonPanel.add(currentMonthButton);
         navigationButtonPanel.add(nextMonthButton);
-        navigationButtonPanel.add(einladungButton);
+        navigationButtonPanel.add(invitationButton);
         topPanel.add(navigationButtonPanel);
 
         topPanel.add(sundayLabel);
@@ -215,9 +215,9 @@ public class MainPanel extends JPanel {
         }
     }
 
-    class einladungButtonHandler implements ActionListener {
+    class invitationButtonHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Einladung window = new Einladung();
+            Invitation window = new Invitation();
             window.frame.setVisible(true);
         }
     }

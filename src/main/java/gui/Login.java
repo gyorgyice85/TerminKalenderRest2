@@ -92,7 +92,7 @@ public class Login {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
-        JLabel lblUsername = new JLabel("Waehlen Sie Ihre Nachname & Vorname: ");
+        JLabel lblUsername = new JLabel("Please select your name to login: ");
         lblUsername.setBounds(270, 105, 400, 80);
         frame.getContentPane().add(lblUsername);
 
@@ -127,6 +127,7 @@ public class Login {
                         window.setNutzerID(nutzerID);
 
                         window.setVisible(true);
+                        frame.dispose();
                     }
                 }
             });
@@ -148,7 +149,7 @@ public class Login {
         separator_1.setBounds(38, 73, 700, 10);
         frame.getContentPane().add(separator_1);
 
-        lblLoginSystems = new JLabel("Wilkommen im Termin Kalendar");
+        lblLoginSystems = new JLabel("Welcome to Your Calender");
         lblLoginSystems.setFont(new Font("Tahoma", Font.BOLD, 20));
         lblLoginSystems.setBounds(230, 18, 700, 31);
         frame.getContentPane().add(lblLoginSystems);
