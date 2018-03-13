@@ -96,7 +96,7 @@ public class DayDetailPanel extends JPanel {
         month = mainPanel.mainFrame.calendar.month.getActiveMonth();
         day = mainPanel.mainFrame.calendar.day.getActiveDay();
         year = mainPanel.mainFrame.calendar.year.getActiveYear();
-        appointments = terminHandle.findAll();
+        appointments = terminHandle.findAll();  // TODO: month, day und year als parameter angeben
 
         removeAll();
         drawDayDetailPanel();

@@ -120,7 +120,12 @@ public class Login {
                         JOptionPane.showMessageDialog(null, "Invalid Login Details",
                                 "Login Error", JOptionPane.ERROR_MESSAGE);
                     } else {
+
+                        int nutzerID = ((Nutzer)comboBox.getSelectedItem()).getId();
+
                         MainFrame window = new MainFrame();
+                        window.setNutzerID(nutzerID);
+
                         window.setVisible(true);
                     }
                 }

@@ -19,6 +19,17 @@ public class MainFrame extends JFrame {
     public CalendarData calendar;
     public TerminHandle terminHandle;
 
+
+    private int nutzerID;
+
+    public int getNutzerID() {
+        return nutzerID;
+    }
+
+    public void setNutzerID(int nutzerID) {
+        this.nutzerID = nutzerID;
+    }
+
     /**
      * Constructor. Calls the initialization of the frame, calendar and manager.
      */

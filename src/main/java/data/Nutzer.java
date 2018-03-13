@@ -93,10 +93,6 @@ public class Nutzer{
 
     @Override
     public String toString() {
-        return "Nutzer{" +
-                "id=" + id +
-                ", vorname='" + vorname + '\'' +
-                ", nachname='" + nachname + '\'' +
-                '}';
+        return vorname + ' ' + nachname;
     }
 }
