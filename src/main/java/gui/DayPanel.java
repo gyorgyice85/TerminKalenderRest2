@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.List;
 
+import static java.awt.Color.BLACK;
+
 /**
  * The <code>DayPanel</code> ensures the user-interface panel for <b>each</b> day.
  * It is placed within <code>MonthPanel</code>.
@@ -42,7 +44,7 @@ public class DayPanel extends JPanel {
         this.calendarPanel = calendarPanel;
         this.index = index;
         date = calendarPanel.mainPanel.mainFrame.calendar.getDate(month, day, year);
-        appointments = terminHandle.findAll();
+        appointments = terminHandle.findAll(); //TODO: Find by ID
         appointmentsCount = appointments.size();
 
         drawDayPanel();
@@ -58,7 +60,7 @@ public class DayPanel extends JPanel {
 
         JPanel dayTopPanel = new JPanel();
         dayTopPanel.setBackground(new Color(0,0,0,0));
-        dayTopPanel.setLayout(new GridLayout(1,3));
+        dayTopPanel.setLayout(new GridLayout(1,2));
 
         // week number
         if (index % 7 == 1) {
@@ -69,32 +71,51 @@ public class DayPanel extends JPanel {
             dayTopPanel.add(new JLabel(""));
         }
 
-        if (appointmentsCount > 0) {
-            JLabel appointmentsCountLabel = new JLabel(appointmentsCount.toString());
-            appointmentsCountLabel.setFont(new Font("Arial", Font.BOLD, 16));
-            appointmentsCountLabel.setHorizontalAlignment(SwingConstants.CENTER);
-            appointmentsCountLabel.setForeground(Color.WHITE);
-            appointmentsCountLabel.setBackground(new Color(0,0,0,50));
-            appointmentsCountLabel.setOpaque(true);
-            dayTopPanel.add(appointmentsCountLabel);
-        }
-        else {
-            dayTopPanel.add(new JLabel(""));
-        }
+
 
         // day number
         dayTopPanel.add(getStyledDayNumber(getDayNumber()));
 
-        viewAppointmentsButton = new JButton("View");
-        viewAppointmentsButton.addActionListener(new viewAppointmentsButtonHandler());
+        JPanel dayMiddlePanel = new JPanel();
+        dayMiddlePanel.setBackground(new Color(0,0,0,0));
+        dayMiddlePanel.setLayout(new GridLayout(2,1));
+
+
         addAppointmentsButton = new JButton("Add");
+        dayMiddlePanel.add(addAppointmentsButton);
         addAppointmentsButton.addActionListener(new addAppointmentsButtonHandler());
+
+        JPanel dayBottomPanel = new JPanel();
+        dayBottomPanel.setBackground(new Color(0,0,0,0));
+        dayBottomPanel.setLayout(new GridLayout(3,2));
+
+        viewAppointmentsButton = new JButton("View");
+        viewAppointmentsButton.setSize(2,2);
+        viewAppointmentsButton.setMaximumSize(getSize());
+        //viewAppointmentsButton.setMargin(new java.awt.Insets(1,2,1,2));
+        viewAppointmentsButton.setHorizontalAlignment(SwingConstants.LEFT);
+        dayBottomPanel.add(viewAppointmentsButton);
+        viewAppointmentsButton.addActionListener(new viewAppointmentsButtonHandler());
+
+        if (appointmentsCount > 0) {
+            JLabel appointmentsCountLabel = new JLabel(appointmentsCount.toString());
+            appointmentsCountLabel.setFont(new Font("Arial", Font.BOLD, 12));
+            appointmentsCountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            appointmentsCountLabel.setForeground(Color.RED);
+            appointmentsCountLabel.setBackground(new Color(0, 0, 0, 50));
+            appointmentsCountLabel.setOpaque(true);
+            dayBottomPanel.add(appointmentsCountLabel);
+        }
+        else {
+            dayBottomPanel.add(new JLabel(""));
+        }
+
         viewAppointmentsButton.setOpaque(false);
         addAppointmentsButton.setOpaque(false);
 
         add(dayTopPanel);
-        add(addAppointmentsButton);
-        add(viewAppointmentsButton);
+        add(dayMiddlePanel);
+        add(dayBottomPanel);
     }
 
     /**
@@ -204,9 +225,10 @@ public class DayPanel extends JPanel {
     private JLabel getStyledWeekNumber(Integer weekNumber) {
         JLabel weekLabel = new JLabel(weekNumber.toString());
         weekLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        weekLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        weekLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        //weekLabel.setForeground(BLACK);
         weekLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        weekLabel.setForeground(Color.decode("#EF4A4A"));
+        weekLabel.setForeground(Color.black);
 
         // styling if has appointments
         if (!appointments.isEmpty()) {
@@ -218,7 +240,7 @@ public class DayPanel extends JPanel {
                 day == calendarPanel.mainPanel.mainFrame.calendar.day.getCurrentDay() &&
                 year == calendarPanel.mainPanel.mainFrame.calendar.year.getCurrentYear()
                 ) {
-            weekLabel.setForeground(Color.WHITE);
+            weekLabel.setForeground(Color.BLACK);
         }
 
         // active day styling
@@ -226,7 +248,7 @@ public class DayPanel extends JPanel {
                 day == calendarPanel.mainPanel.mainFrame.calendar.day.getActiveDay() &&
                 year == calendarPanel.mainPanel.mainFrame.calendar.year.getActiveYear()
                 ) {
-            weekLabel.setForeground(Color.WHITE);
+            weekLabel.setForeground(Color.BLACK);
         }
 
         return weekLabel;

@@ -50,11 +50,13 @@ public class Invitation {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
 
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
         lblFrom = new JLabel("From: ");
         lblFrom.setBounds(150, 120, 100, 30);
         frame.getContentPane().add(lblFrom);
 
-        lblGetFrom = new JLabel("getFrom()");
+        lblGetFrom = new JLabel("");//TODO: getFrom() -- Server
         lblGetFrom.setOpaque(true);
         lblGetFrom.setBackground(new Color(176,196,222));
         lblGetFrom.setBounds(300, 120, 300, 30);
@@ -64,7 +66,7 @@ public class Invitation {
         lblName.setBounds(150, 160, 100, 30);
         frame.getContentPane().add(lblName);
 
-        lblGetName = new JLabel("getName()");
+        lblGetName = new JLabel("");//TODO: getName() -- Server
         lblGetName.setOpaque(true);
         lblGetName.setBackground(new Color(176,196,222));
         lblGetName.setBounds(300, 160, 300, 30);
@@ -74,7 +76,7 @@ public class Invitation {
         lblPlace.setBounds(150, 200, 100, 30);
         frame.getContentPane().add(lblPlace);
 
-        lblGetPlace = new JLabel("getPlace()");
+        lblGetPlace = new JLabel("");//TODO: getPlace() -- Server
         lblGetPlace.setOpaque(true);
         lblGetPlace.setBackground(new Color(176,196,222));
         lblGetPlace.setBounds(300, 200, 300, 30);
@@ -84,7 +86,7 @@ public class Invitation {
         lblStartTime.setBounds(150, 240, 100, 30);
         frame.getContentPane().add(lblStartTime);
 
-        lblGetStartTime = new JLabel("getStartTime()");
+        lblGetStartTime = new JLabel("");//TODO: getStartTime -- Server
         lblGetStartTime.setOpaque(true);
         lblGetStartTime.setBackground(new Color(176,196,222));
         lblGetStartTime.setBounds(300, 240, 300, 30);
@@ -94,7 +96,7 @@ public class Invitation {
         lblEndTime.setBounds(150, 280, 100, 30);
         frame.getContentPane().add(lblEndTime);
 
-        lblGetEndTime = new JLabel("getEndTime()");
+        lblGetEndTime = new JLabel("");//TODO getEndTime -- Server
         lblGetEndTime.setOpaque(true);
         lblGetEndTime.setBackground(new Color(176,196,222));
         lblGetEndTime.setBounds(300, 280, 300, 30);
@@ -114,13 +116,14 @@ public class Invitation {
 
         btnAccept.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                // TODO : Verbinden mit new Termin eigene ID
             }
         });
 
         btnDecline.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                //TODO : --
+                frame.dispose();
             }
         });
 

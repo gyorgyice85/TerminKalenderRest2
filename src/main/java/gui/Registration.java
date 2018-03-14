@@ -66,6 +66,8 @@ public class Registration {
             frame.getContentPane().setLayout(null);
 
 
+            frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
             JLabel lblNachname = new JLabel("Last name:");
             lblNachname.setBounds(150, 120, 100, 30);
             frame.getContentPane().add(lblNachname);
