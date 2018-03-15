@@ -24,10 +24,12 @@ public class DayPanel extends JPanel {
     private CalendarPanel calendarPanel;
     public Integer day, month, year, index;
     private JButton viewAppointmentsButton, addAppointmentsButton;
+
     public List<Termin> appointments;
     private Date date;
-    private TerminHandle terminHandle = new TerminHandle();
     private Integer appointmentsCount;
+
+    ClientSession cs;
 
     /**
      * Constructor. Initializes a day-panel.
@@ -42,9 +44,11 @@ public class DayPanel extends JPanel {
         this.month = month;
         this.year = year;
         this.calendarPanel = calendarPanel;
+        this.cs = calendarPanel.mainPanel.cs;
         this.index = index;
         date = calendarPanel.mainPanel.mainFrame.calendar.getDate(month, day, year);
-        appointments = terminHandle.findAll(); //TODO: Find by ID
+
+        appointments = cs.nutzerHandle.getTermineAmTag(cs.nutzer, new java.sql.Date(date.getTime()));
         appointmentsCount = appointments.size();
 
         drawDayPanel();
@@ -279,7 +283,7 @@ public class DayPanel extends JPanel {
             // redraw panels
             calendarPanel.mainPanel.setMonthYearLabelText();
             calendarPanel.mainPanel.setDateFieldText();
-            calendarPanel.monthPanel.redrawMonthPanel();
+            //calendarPanel.monthPanel.redrawMonthPanel();
             calendarPanel.mainPanel.dayDetailPanel.redrawDayDetailPanel();
         }
     }

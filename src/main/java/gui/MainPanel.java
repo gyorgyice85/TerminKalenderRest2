@@ -27,12 +27,16 @@ public class MainPanel extends JPanel {
     private JLabel sundayLabel, mondayLabel, tuesdayLabel, wednesdayLabel, thursdayLabel, fridayLabel, saturdayLabel, monthYearLabel;
     public JTextField dateField;
 
+    ClientSession cs;
+
     /**
      * Constructor. Sets the dimensions and content of the main-panel.
      * @param mainFrame is passed to have access to it's methods and variables.
      */
     public MainPanel(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
+        this.cs = mainFrame.cs;
+
         topPanelWidth = mainFrame.getMainFrameWidth();
         setLayout(null);
         addComponentListener(new resizeListener());
@@ -104,7 +108,7 @@ public class MainPanel extends JPanel {
         navigationButtonPanel.add(prevMonthButton);
         navigationButtonPanel.add(currentMonthButton);
         navigationButtonPanel.add(nextMonthButton);
-        navigationButtonPanel.add(invitationButton);
+        //navigationButtonPanel.add(invitationButton); // NOTE invitationButton sollte bei einem Bestimmten Termin sein, statt hier
         topPanel.add(navigationButtonPanel);
 
         topPanel.add(sundayLabel);
@@ -217,7 +221,7 @@ public class MainPanel extends JPanel {
 
     class invitationButtonHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            Invitation window = new Invitation();
+            Invitation window = new Invitation(null, null);
             window.frame.setVisible(true);
         }
     }

@@ -52,6 +52,13 @@ public class Termin {
                 '}';
     }
 
+    public String toPrettyString() {
+        return "Beschreibung='" + beschreibung + '\'' +
+                ", Ort='" + ort + '\'' +
+                ", von=" + von +
+                ", bis=" + bis;
+    }
+
     /**
      * Methode um die eingeladenen Nutzer des Termins zurückzugeben
      * @return List<Nutzer> Liste der Teilnehmer

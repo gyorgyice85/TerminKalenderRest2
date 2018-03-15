@@ -95,7 +95,13 @@ public class NutzerService {
     @GET
     @Path("{nutzerID}/termine")
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public List<Termin> getTermine(@PathParam("nutzerID") int nutzerID) {
-        return teilnehmerDAO.getTermine(nutzerID);
+    public List<Termin> getTermine(@PathParam("nutzerID") int nutzerID,
+                                   @QueryParam("tag") String tag) {
+
+        if (tag == null) {
+            return teilnehmerDAO.getTermine(nutzerID);
+        } else {
+            return teilnehmerDAO.getTermine(nutzerID, tag);
+        }
     }
 }

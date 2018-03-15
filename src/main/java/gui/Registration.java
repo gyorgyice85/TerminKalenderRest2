@@ -21,6 +21,8 @@ public class Registration {
         static Color accent = new Color(0, 188, 212);
         static Color bg = new Color(96, 125, 139);
 
+    private ClientSession cs;
+
         /**
          * Launch the application.
          */
@@ -28,7 +30,7 @@ public class Registration {
             EventQueue.invokeLater(new Runnable() {
                 public void run() {
                     try {
-                        Registration window = new Registration();
+                        Registration window = new Registration(new ClientSession());
                         window.frame.setVisible(true);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -52,14 +54,15 @@ public class Registration {
         /**
          * Create the application.
          */
-        public Registration() {
+        public Registration(ClientSession cs) {
+            this.cs = cs;
             initialize();
         }
 
         /**
          * Initialize the contents of the frame.
          */
-        public static void initialize() {
+        public void initialize() {
             frame = new JFrame();
             frame.setBounds(800, 500, 800, 500);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -106,8 +109,8 @@ public class Registration {
                     else {
                         Boolean validName = true;
 
-                        String vorName = textField_1.getText();
-                        String nachName = textField_2.getText();
+                        String nachName = textField_1.getText();
+                        String vorName = textField_2.getText();
 
                         // validate name
                         if (nachName == null || nachName.isEmpty()) {
@@ -120,12 +123,13 @@ public class Registration {
                         }
 
                         if (validName) {
-                            Nutzer nutzer = new Nutzer(nachName, vorName);
-                            NutzerHandle nutzerHandler = new NutzerHandle();
-                            nutzerHandler.create(nutzer);
+                            Nutzer nutzer = new Nutzer(vorName, nachName);
+                            nutzer = cs.nutzerHandle.create(nutzer);
+                            cs.nutzer = nutzer;
+                            cs.nutzerID = nutzer.getId();
 
                             JOptionPane.showMessageDialog(null, "Data Submitted");
-                            MainFrame window = new MainFrame();
+                            MainFrame window = new MainFrame(cs);
                             window.setVisible(true);
                             frame.dispose();
                         }

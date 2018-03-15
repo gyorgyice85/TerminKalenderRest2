@@ -1,7 +1,6 @@
 package gui;
 
 import data.Termin;
-import client.TerminHandle;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -9,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,19 +22,17 @@ public class DayDetailPanel extends JPanel {
     private Integer day, month, year;
     private Integer dayDetailPanelWidth, dayDetailPanelHeight;
     private MainPanel mainPanel;
-    private TerminHandle terminHandle = new TerminHandle();
-    private List<Termin> appointments;
     private JScrollPane scrollPane;
+
+    private List<Termin> appointments;
+    ClientSession cs;
 
     /**
      * Constructor. Creates an calendar object and inits the calendar-panel.
      */
     public DayDetailPanel(MainPanel mainPanel) {
         this.mainPanel = mainPanel;
-        month = mainPanel.mainFrame.calendar.month.getActiveMonth();
-        day = mainPanel.mainFrame.calendar.day.getActiveDay();
-        year = mainPanel.mainFrame.calendar.year.getActiveYear();
-        appointments = terminHandle.findAll();
+        this.cs = mainPanel.cs;
 
         drawDayDetailPanel();
     }
@@ -43,10 +41,17 @@ public class DayDetailPanel extends JPanel {
      * Draws the day-detail panel.
      */
     private void drawDayDetailPanel() {
+
         setLayout(null);
         setBackground(Color.WHITE);
         setDayDetailPanelDimensions();
         setDayDetailPanelBounds();
+
+        month = mainPanel.mainFrame.calendar.month.getActiveMonth();
+        day = mainPanel.mainFrame.calendar.day.getActiveDay();
+        year = mainPanel.mainFrame.calendar.year.getActiveYear();
+        Date date = mainPanel.mainFrame.calendar.getDate(month, day, year);
+        appointments = cs.nutzerHandle.getTermineAmTag(cs.nutzer, new java.sql.Date(date.getTime()));
 
         drawDayLabel();
         drawAppointments();
@@ -93,11 +98,6 @@ public class DayDetailPanel extends JPanel {
      * Redraws the day detail-panel
      */
     public void redrawDayDetailPanel() {
-        month = mainPanel.mainFrame.calendar.month.getActiveMonth();
-        day = mainPanel.mainFrame.calendar.day.getActiveDay();
-        year = mainPanel.mainFrame.calendar.year.getActiveYear();
-        appointments = terminHandle.findAll();  // TODO: month, day und year als parameter angeben
-
         removeAll();
         drawDayDetailPanel();
         validate();
@@ -108,6 +108,7 @@ public class DayDetailPanel extends JPanel {
      * Draws each appointment with it's contents in the panel.
      */
     private void drawAppointments() {
+
         JPanel appointmentsPanel = new JPanel();
         appointmentsPanel.setLayout(new BoxLayout(appointmentsPanel, BoxLayout.Y_AXIS));
         appointmentsPanel.setBackground(Color.WHITE);
@@ -144,8 +145,12 @@ public class DayDetailPanel extends JPanel {
                 JLabel time = new JLabel(startTime+" - "+endTime);
                 time.setBorder(spacingBorder);
 
+                JButton inviteButton = new JButton("Invite");
+                inviteButton.addActionListener(new InviteHandler(appointment));
+
+
                 JButton deleteButton = new JButton("Delete");
-                deleteButton.addActionListener(new deleteAppointmentHandler(appointment.getId()));
+                deleteButton.addActionListener(new DeleteAppointmentHandler(appointment));
 
                 // create panel and add components
                 JPanel appointmentPanel = new JPanel();
@@ -162,6 +167,7 @@ public class DayDetailPanel extends JPanel {
                     appointmentPanel.add(location);
                 }
 
+                appointmentPanel.add(inviteButton);
                 appointmentPanel.add(deleteButton);
 
                 appointmentPanel.setOpaque(false);
@@ -182,16 +188,16 @@ public class DayDetailPanel extends JPanel {
     /**
      * Inner class. Triggers an actionlistener when a delete button is clicked.
      */
-    class deleteAppointmentHandler implements ActionListener {
-        private Integer appointmentId;
-        private String appointmentName;
+    class DeleteAppointmentHandler implements ActionListener {
+
+        private Termin termin;
 
         /**
-         * Constructor, stores the appointment ID.
-         * @param appointmentId
+         * Constructor, stores the appointment.
+         * @param termin
          */
-        public deleteAppointmentHandler(Integer appointmentId) {
-            this.appointmentId = appointmentId;
+        public DeleteAppointmentHandler(Termin termin) {
+            this.termin = termin;
         }
 
         /**
@@ -199,15 +205,48 @@ public class DayDetailPanel extends JPanel {
          * @param e
          */
         public void actionPerformed(ActionEvent e) {
-            int dialogResult = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete the event \""+appointmentName+"\"?", "Delete event", JOptionPane.YES_NO_OPTION);
+
+            int dialogResult = JOptionPane.showConfirmDialog(
+                    null,
+                    "Are you sure you want to delete the event \"" + termin.toPrettyString() + "\"?",
+                    "Delete event",
+                    JOptionPane.YES_NO_OPTION);
 
             if (dialogResult == JOptionPane.YES_OPTION) {
                 // delete appointment
-                terminHandle.remove(appointmentId);
+                cs.terminHandle.remove(termin.getId());
                 // redraw panels
                 mainPanel.calendarPanel.monthPanel.redrawMonthPanel();
                 mainPanel.dayDetailPanel.redrawDayDetailPanel();
             }
+        }
+    }
+
+    /**
+     * Inner class. Triggers an actionlistener when a delete button is clicked.
+     */
+    class InviteHandler implements ActionListener {
+
+        private Termin termin;
+
+        /**
+         * Constructor, stores the appointment.
+         * @param termin
+         */
+        public InviteHandler(Termin termin) {
+            this.termin = termin;
+        }
+
+        /**
+         * Shows a Window to allow for inviting people to an appointment
+         * @param e
+         */
+        public void actionPerformed(ActionEvent e) {
+
+            Integer offsetX = getLocationOnScreen().x;
+            Integer offsetY = getLocationOnScreen().y;
+
+            new TeilnehmerFrame(termin, cs, offsetX, offsetY);
         }
     }
 }

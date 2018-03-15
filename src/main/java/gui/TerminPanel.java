@@ -1,20 +1,17 @@
 package gui;
 
-import client.NutzerHandle;
 import client.TerminHandle;
 import data.Nutzer;
 import data.Termin;
-import javafx.scene.control.ComboBox;
 
-import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * The <code>AppointmentPanel</code> ensures the panel of the <code>AppointmentFrame</code>.
@@ -28,9 +25,6 @@ public class TerminPanel extends JPanel {
     private JFrame appointmentFrame;
     private CalendarPanel calendarPanel;
     private JTextField nameTextField, placeTextField, startTimeTextField, endTimeTextField, inviteTextField;
-    private JComboBox<Nutzer> inviteComboBox;
-    private NutzerHandle nutzerHandle;
-
 
     /**
      * Constructor. Sets the global variables and calls the draw method.
@@ -52,23 +46,15 @@ public class TerminPanel extends JPanel {
      */
     public void drawAppointmentPanel() {
         setLayout(new SpringLayout());
-        String[] labels = {"Name", "Place", "Start Time", "End Time", "Invite", ""};
+        String[] labels = {"Name", "Place", "Start Time", "End Time", ""};
         int numPairs = labels.length;
 
         JButton saveButton = new JButton("Save");
         saveButton.setPreferredSize(new Dimension(200,40));
-        saveButton.addActionListener(new saveAppointmentHandler());
+        saveButton.addActionListener(new SaveAppointmentHandler(calendarPanel.mainPanel.cs));
 
         ArrayList<JTextField> textFieldList = listTextFields();
 
-       /* List<Nutzer> nutzers = nutzerHandle.findAll();
-        inviteComboBox = new JComboBox<>();
-        for (Integer i = 0; i < nutzers.size(); i++) {
-            nutzerHandle.findAll();
-            Nutzer nutzer = nutzers.get(i);
-            inviteComboBox.addItem(nutzer);
-        }
-*/
         // fill the panel
         for (int i = 0; i < numPairs; i++) {
             JLabel l = new JLabel(labels[i], JLabel.TRAILING);
@@ -95,12 +81,15 @@ public class TerminPanel extends JPanel {
      * @return ArrayList of textfields
      */
     private ArrayList<JTextField> listTextFields() {
+
+        String dayString = new java.sql.Date(date.getTime()).toString();
+
         ArrayList<JTextField> textFieldList  = new ArrayList<>();
         textFieldList.add(nameTextField = new JTextField());
         textFieldList.add(placeTextField = new JTextField());
-        textFieldList.add(startTimeTextField = new JTextField());
-        textFieldList.add(endTimeTextField = new JTextField());
-        textFieldList.add(inviteTextField = new JTextField());
+        textFieldList.add(startTimeTextField = new JTextField(dayString + " 12:00:00"));
+        textFieldList.add(endTimeTextField = new JTextField(dayString + " 13:00:00"));
+        //textFieldList.add(inviteTextField = new JTextField());
 
         return textFieldList;
     }
@@ -134,7 +123,14 @@ public class TerminPanel extends JPanel {
     /**
      * Inner class. Triggers an actionlistener when the <code>addAppointmentButton</code> is clicked.
      */
-    class saveAppointmentHandler implements ActionListener {
+    class SaveAppointmentHandler implements ActionListener {
+
+        private ClientSession cs;
+
+        public SaveAppointmentHandler(ClientSession cs) {
+            this.cs = cs;
+        }
+
         /**
          * Opens new frame where a new appointment can be added.
          * @param e
@@ -166,18 +162,22 @@ public class TerminPanel extends JPanel {
 
 
             if (validName && validTimes) {
+
                 // add appointment
                 Termin termin = new Termin(name, place, startTime, endTime);
-                TerminHandle terminHandle = new TerminHandle();
-                terminHandle.create(termin);
+                termin = cs.terminHandle.create(termin);
+                cs.terminHandle.teilnehmerHinzufuegen(termin, cs.nutzer);
+
                 // close frame
                 appointmentFrame.setVisible(false);
                 appointmentFrame.dispose();
+
                 // repaint panels and show succes message
                 calendarPanel.monthPanel.redrawMonthPanel();
+                calendarPanel.mainPanel.dayDetailPanel.redrawDayDetailPanel();
                 showSuccesMessage(name);
-            }
-            else {
+
+            } else {
                 // show errors
                 if(!validName) { showNameError(); }
                 if(!validTimes) { showTimeError(); }

@@ -1,50 +1,50 @@
 package gui;
 
+import data.Nutzer;
+import data.Termin;
+import webservices.EinladungEvent;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Invitation {
-    static  JFrame frame;
-    static  JLabel lblInvitation;
-    static  JLabel lblFrom;
-    static  JLabel lblName;
-    static  JLabel lblPlace;
-    static  JLabel lblStartTime;
-    static  JLabel lblEndTime;
-    static  JButton btnAccept;
-    static  JButton btnExit;
-    static  JButton btnDecline;
-    static  JLabel lblGetFrom;
-    static  JLabel lblGetName;
-    static  JLabel lblGetPlace;
-    static  JLabel lblGetStartTime;
-    static  JLabel lblGetEndTime;
+    public   JFrame frame;
+     JLabel lblInvitation;
+    JLabel lblFrom;
+    JLabel lblName;
+    JLabel lblPlace;
+    JLabel lblStartTime;
+    JLabel lblEndTime;
+    JButton btnAccept;
+    JButton btnExit;
+    JButton btnDecline;
+    JLabel lblGetFrom;
+    JLabel lblGetName;
+    JLabel lblGetPlace;
+    JLabel lblGetStartTime;
+    JLabel lblGetEndTime;
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    Invitation window = new Invitation();
-                    window.frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+    private EinladungEvent einladungEvent;
+    private Termin termin;
+    private Nutzer wer;
+    private Nutzer wen;
+    private ClientSession cs;
 
+    public Invitation(EinladungEvent einladungEvent, ClientSession cs) {
 
-    public Invitation() {
+        this.einladungEvent = einladungEvent;
+        this.cs = cs;
+
+        termin = cs.terminHandle.findById(einladungEvent.getTerminID());
+        wer = cs.nutzerHandle.findById(einladungEvent.getWer());
+        wen = cs.nutzerHandle.findById(einladungEvent.getWen());
+
         initialize();
-
     }
 
-    public static void initialize() {
+    public void initialize() {
         frame = new JFrame();
         frame.setBounds(800, 500, 800, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,7 +56,7 @@ public class Invitation {
         lblFrom.setBounds(150, 120, 100, 30);
         frame.getContentPane().add(lblFrom);
 
-        lblGetFrom = new JLabel("");//TODO: getFrom() -- Server
+        lblGetFrom = new JLabel(wer.toString());
         lblGetFrom.setOpaque(true);
         lblGetFrom.setBackground(new Color(176,196,222));
         lblGetFrom.setBounds(300, 120, 300, 30);
@@ -66,7 +66,7 @@ public class Invitation {
         lblName.setBounds(150, 160, 100, 30);
         frame.getContentPane().add(lblName);
 
-        lblGetName = new JLabel("");//TODO: getName() -- Server
+        lblGetName = new JLabel(termin.getBeschreibung());
         lblGetName.setOpaque(true);
         lblGetName.setBackground(new Color(176,196,222));
         lblGetName.setBounds(300, 160, 300, 30);
@@ -76,7 +76,7 @@ public class Invitation {
         lblPlace.setBounds(150, 200, 100, 30);
         frame.getContentPane().add(lblPlace);
 
-        lblGetPlace = new JLabel("");//TODO: getPlace() -- Server
+        lblGetPlace = new JLabel(termin.getOrt());
         lblGetPlace.setOpaque(true);
         lblGetPlace.setBackground(new Color(176,196,222));
         lblGetPlace.setBounds(300, 200, 300, 30);
@@ -86,7 +86,7 @@ public class Invitation {
         lblStartTime.setBounds(150, 240, 100, 30);
         frame.getContentPane().add(lblStartTime);
 
-        lblGetStartTime = new JLabel("");//TODO: getStartTime -- Server
+        lblGetStartTime = new JLabel(termin.getVon().toString());
         lblGetStartTime.setOpaque(true);
         lblGetStartTime.setBackground(new Color(176,196,222));
         lblGetStartTime.setBounds(300, 240, 300, 30);
@@ -96,7 +96,7 @@ public class Invitation {
         lblEndTime.setBounds(150, 280, 100, 30);
         frame.getContentPane().add(lblEndTime);
 
-        lblGetEndTime = new JLabel("");//TODO getEndTime -- Server
+        lblGetEndTime = new JLabel(termin.getBis().toString());
         lblGetEndTime.setOpaque(true);
         lblGetEndTime.setBackground(new Color(176,196,222));
         lblGetEndTime.setBounds(300, 280, 300, 30);
@@ -116,13 +116,13 @@ public class Invitation {
 
         btnAccept.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // TODO : Verbinden mit new Termin eigene ID
+                cs.terminHandle.annehmen(termin, wen);
             }
         });
 
         btnDecline.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //TODO : --
+                cs.terminHandle.ablehnen(termin, wen);
                 frame.dispose();
             }
         });

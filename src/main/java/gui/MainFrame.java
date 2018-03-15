@@ -1,6 +1,7 @@
 package gui;
 
 import calendar.CalendarData;
+import client.EventsHandle;
 import client.TerminHandle;
 
 import javax.swing.*;
@@ -14,28 +15,20 @@ import java.awt.*;
  * @version 1.0
  */
 public class MainFrame extends JFrame {
+
     public Integer frameWidth, frameHeight;
     public MainPanel mainPanel;
     public CalendarData calendar;
-    public TerminHandle terminHandle;
 
-
-    private int nutzerID;
-
-    public int getNutzerID() {
-        return nutzerID;
-    }
-
-    public void setNutzerID(int nutzerID) {
-        this.nutzerID = nutzerID;
-    }
+    protected ClientSession cs;
+    EventsHandle eventsHandle;
 
     /**
      * Constructor. Calls the initialization of the frame, calendar and manager.
      */
-    public MainFrame() {
+    public MainFrame(ClientSession cs) {
+        this.cs = cs;
         calendar = new CalendarData();
-        terminHandle = new TerminHandle();
         initFrame();
     }
 
@@ -45,7 +38,7 @@ public class MainFrame extends JFrame {
     private void initFrame(){
         new JFrame();
         setFrameDimension(false);
-        setTitle("Java Calendar");
+        setTitle("Calendar of " + cs.nutzer.toString());
         //setSize(frameWidth,frameHeight);
         setSize(1300,800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,6 +52,12 @@ public class MainFrame extends JFrame {
         setResizable(false);
         pack();
         setVisible(true);
+
+        try {
+            eventsHandle = new EventsHandle(cs);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

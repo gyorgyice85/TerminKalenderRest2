@@ -17,7 +17,6 @@ import java.util.List;
 public class TerminServiceDemo {
 
     private HttpServer server;
-    private WebTarget target;
 
     private TerminHandle terminHandle;
     private NutzerHandle nutzerHandle;

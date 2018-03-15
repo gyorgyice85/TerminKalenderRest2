@@ -1,6 +1,7 @@
 package rest;
 
 import client.NutzerHandle;
+import client.TerminHandle;
 import data.Nutzer;
 import data.Termin;
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -10,13 +11,15 @@ import org.junit.Test;
 import webservices.KalenderServer;
 
 import javax.ws.rs.client.WebTarget;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class NutzerServiceDemo {
 
     private HttpServer server;
-    private WebTarget target;
 
+    private TerminHandle terminHandle;
     private NutzerHandle nutzerHandle;
 
     @Before
@@ -24,6 +27,7 @@ public class NutzerServiceDemo {
         // start the server
         server = KalenderServer.startServer();
         // create the client
+        terminHandle = new TerminHandle();
         nutzerHandle = new NutzerHandle();
     }
 
@@ -93,10 +97,45 @@ public class NutzerServiceDemo {
     @Test
     public void getTermine() {
 
-        List<Termin> terminList = nutzerHandle.getTermine(nutzerHandle.findById(4359));
+        List<Termin> terminList = nutzerHandle.getTermine(nutzerHandle.findById(4371));
 
         for (Termin termin : terminList) {
             System.out.println(termin);
         }
+    }
+
+    private void createTerminMitTeilnehmer(Nutzer nutzer, String von, String bis) {
+        Termin termin = new Termin();
+        termin.setVon(new Timestamp(Date.valueOf(von).getTime()));
+        termin.setBis(new Timestamp(Date.valueOf(bis).getTime()));
+        termin = terminHandle.create(termin);
+        terminHandle.teilnehmerHinzufuegen(termin, nutzer);
+    }
+
+    private void listTermineAmTag(Nutzer nutzer, String tag) {
+        System.out.println("Date = " + tag);
+        for (Termin termin : nutzerHandle.getTermineAmTag(nutzer, Date.valueOf(tag))) {
+            System.out.println(termin);
+        }
+    }
+
+    @Test
+    public void getTermineAmTag() {
+
+        Nutzer nutzer = nutzerHandle.create(new Nutzer());
+
+        createTerminMitTeilnehmer(nutzer, "2018-03-01", "2018-03-01");
+        createTerminMitTeilnehmer(nutzer, "2018-03-02", "2018-03-02");
+        createTerminMitTeilnehmer(nutzer, "2018-03-01", "2018-03-02");
+
+        listTermineAmTag(nutzer,"2018-03-01");
+        listTermineAmTag(nutzer,"2018-03-02");
+        listTermineAmTag(nutzer,"2018-03-03");
+    }
+
+    @Test
+    public void realityCheck() {
+        Nutzer nutzer = nutzerHandle.findById(4377);
+        listTermineAmTag(nutzer, "2018-03-13");
     }
 }

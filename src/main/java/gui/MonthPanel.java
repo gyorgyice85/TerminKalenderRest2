@@ -100,7 +100,7 @@ public class MonthPanel extends JPanel {
     }
 
     /**
-     * Generates a list of days that needs to be displayed in the mont-panel.
+     * Generates a list of days that needs to be displayed in the month-panel.
      * May include some days of the previous and the next month.
      */
     public void setDayPanelList() {

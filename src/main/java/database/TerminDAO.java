@@ -133,10 +133,36 @@ public class TerminDAO {
         Connection c = null;
         try {
             c = ConnectionHelper.getConnection();
+            removeCascadeOnly(id);
             PreparedStatement ps = c.prepareStatement("DELETE FROM Termin WHERE id=?");
             ps.setInt(1, id);
             int count = ps.executeUpdate();
             return count == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        } finally {
+            ConnectionHelper.close(c);
+        }
+    }
+
+    /**
+     * Deletes entries from the Einladungen and Teilnehmer tables,
+     * that refer to the Termin with id = id.
+     */
+    public void removeCascadeOnly(int id) {
+        Connection c = null;
+        try {
+            c = ConnectionHelper.getConnection();
+
+            PreparedStatement ps = c.prepareStatement("DELETE FROM Teilnehmer WHERE TerminID =?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+            ps = c.prepareStatement("DELETE FROM Einladungen WHERE TERMIN =?");
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);

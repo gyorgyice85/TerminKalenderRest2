@@ -1,12 +1,8 @@
 package gui;
 
 import data.Nutzer;
-import client.NutzerHandle;
-import org.glassfish.grizzly.http.server.HttpServer;
-import webservices.KalenderServer;
 
 import javax.swing.*;
-import javax.ws.rs.client.WebTarget;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,12 +22,7 @@ public class Login {
     static Color accent = new Color(0, 188, 212);
     static Color bg = new Color(96, 125, 139);
 
-    private HttpServer server;
-    private WebTarget target;
-
-    private NutzerHandle nutzerHandle;
-
-
+    private ClientSession cs;
 
     /**
      * Launch the application.
@@ -66,20 +57,11 @@ public class Login {
      */
     public Login() {
 
-        setUp();
+        // create the client session
+        cs = new ClientSession();
+
+        // initialize GUI
         initialize();
-    }
-
-
-    public void setUp() {
-        // start the server
-        server = KalenderServer.startServer();
-        // create the client
-        nutzerHandle = new NutzerHandle();
-    }
-
-    public void tearDown() {
-        server.stop();
     }
 
     /**
@@ -96,48 +78,43 @@ public class Login {
         lblUsername.setBounds(270, 105, 400, 80);
         frame.getContentPane().add(lblUsername);
 
-        List<Nutzer> nutzers = nutzerHandle.findAll();
+        List<Nutzer> nutzers = cs.nutzerHandle.findAll();
         final JComboBox<Nutzer> comboBox = new JComboBox<>();
-            for (Integer i = 0; i < nutzers.size(); i++) {
-                nutzerHandle.findAll();
-                Nutzer nutzer = nutzers.get(i);
 
+        for (Nutzer nutzer : nutzers) {
                 comboBox.addItem(nutzer);
-                comboBox.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent arg0) {
-                    }
-                });
-                comboBox.setBounds(200, 220, 400, 30);
-                frame.getContentPane().add(comboBox);
-            }
+        }
 
+        comboBox.setBounds(200, 220, 400, 30);
+        frame.getContentPane().add(comboBox);
 
-            JButton btnLogin = new JButton("Login");
-            btnLogin.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent arg0) {
+        JButton btnLogin = new JButton("Login");
+        btnLogin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
 
-                    if (comboBox.getSelectedItem().equals("Select")/*txtUsername.getText().isEmpty()*/) {
-                        JOptionPane.showMessageDialog(null, "Invalid Login Details",
-                                "Login Error", JOptionPane.ERROR_MESSAGE);
-                    } else {
+                if (comboBox.getSelectedItem().equals("Select")/*txtUsername.getText().isEmpty()*/) {
+                    JOptionPane.showMessageDialog(null, "Invalid Login Details",
+                            "Login Error", JOptionPane.ERROR_MESSAGE);
+                } else {
 
-                        int nutzerID = ((Nutzer)comboBox.getSelectedItem()).getId();
+                    Nutzer eingeloggteNutzer = (Nutzer)comboBox.getSelectedItem();
+                    cs.nutzer = eingeloggteNutzer;
+                    cs.nutzerID = eingeloggteNutzer.getId();
 
-                        MainFrame window = new MainFrame();
-                        window.setNutzerID(nutzerID);
+                    MainFrame window = new MainFrame(cs);
 
-                        window.setVisible(true);
-                        frame.dispose();
-                    }
+                    window.setVisible(true);
+                    frame.dispose();
                 }
-            });
-            btnLogin.setBounds(250, 350, 89, 30);
-            frame.getContentPane().add(btnLogin);
+            }
+        });
+        btnLogin.setBounds(250, 350, 89, 30);
+        frame.getContentPane().add(btnLogin);
 
         btnRegistration = new JButton("Registration");
         btnRegistration.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent arg0) {
-                Registration window = new Registration();
+                Registration window = new Registration(cs);
                 window.frame.setVisible(true);
             }
         });

@@ -10,6 +10,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import java.sql.Date;
 import java.util.List;
 
 public class NutzerHandle {
@@ -70,6 +71,12 @@ public class NutzerHandle {
     public List<Termin> getTermine(Nutzer nutzer) {
         return target.path("nutzer").path(String.valueOf(nutzer.getId())).path("termine").
                 request().accept(MediaType.APPLICATION_XML).get(new GenericType<List<Termin>>() {});
+    }
+
+    public List<Termin> getTermineAmTag(Nutzer nutzer, Date tag) {
+        return target.path("nutzer").path(String.valueOf(nutzer.getId())).path("termine")
+                .queryParam("tag", tag.toString())
+                .request().accept(MediaType.APPLICATION_XML).get(new GenericType<List<Termin>>() {});
     }
 }
 

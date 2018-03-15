@@ -3,10 +3,7 @@ package database;
 import data.Nutzer;
 import data.Termin;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,13 +58,41 @@ public class TeilnehmerDAO {
 
     /**
      * Methode um Termine des Nutzers zurückzugeben
+     * @param nutzer der Nutzer
+     * @return List<Termin> Liste der Termine
+     */
+    public List<Termin> getTermine(Nutzer nutzer, String tag){
+        return getTermine(nutzer.getId(), tag);
+    }
+
+    /**
+     * Methode um Termine des Nutzers zurückzugeben
      * @param nutzerID der Nutzer
      * @return List<Termin> Liste der Termine
      */
-    public List<Termin> getTermine(int nutzerID){
+    public List<Termin> getTermine(int nutzerID) {
+        return getTermine(nutzerID, null);
+    }
+
+    public static Date stripTime(Date date) {
+        return new Date(date.getYear(), date.getMonth(), date.getDate());
+    }
+
+    public static Date stripTime(Timestamp date) {
+        return stripTime(new Date(date.getTime()));
+    }
+
+    /**
+     * Methode um Termine des Nutzers zurückzugeben
+     * @param nutzerID der Nutzer
+     * @param tag der Tag worauf wir die Suche beschraenken sollen (optional)
+     * @return List<Termin> Liste der Termine
+     */
+    public List<Termin> getTermine(int nutzerID, String tag) {
+
         List<Termin> list = new ArrayList<Termin>();
         Connection c = null;
-        TerminDAO termin = new TerminDAO();
+        TerminDAO terminDAO = new TerminDAO();
         String sql = "SELECT TERMIN.* FROM TERMIN JOIN TEILNEHMER WHERE " +
                 "Teilnehmer.TerminID = ID AND NutzerID = ?";
 
@@ -75,9 +100,22 @@ public class TeilnehmerDAO {
             c = ConnectionHelper.getConnection();
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setInt(1, nutzerID);
+
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(termin.processRow(rs));
+
+                Termin termin = terminDAO.processRow(rs);
+                if (tag != null) {
+                    Date tagDate = Date.valueOf(tag);
+                    Date tagVon = stripTime(termin.getVon());
+                    Date tagBis = stripTime(termin.getBis());
+                    if (tagVon.compareTo(tagDate) <= 0 && tagDate.compareTo(tagBis) <= 0) {
+                        list.add(termin);
+                    }
+                } else {
+                    list.add(termin);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

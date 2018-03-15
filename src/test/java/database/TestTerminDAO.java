@@ -4,6 +4,8 @@ import data.Termin;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 public class TestTerminDAO {
 
     TerminDAO terminDAO;
@@ -25,5 +27,11 @@ public class TestTerminDAO {
         for (Termin t : terminDAO.findByBeschreibung("MUSTER")) {
             System.out.println(t);
         }
+    }
+
+    @Test
+    public void realityCheck() {
+        TeilnehmerDAO teilnehmerDAO = new TeilnehmerDAO();
+        List<Termin> result = teilnehmerDAO.getTermine(4377, "2018-03-13");
     }
 }
