@@ -11,20 +11,20 @@ import java.awt.event.ActionListener;
 
 public class Invitation {
     public   JFrame frame;
-     JLabel lblInvitation;
-    JLabel lblFrom;
-    JLabel lblName;
-    JLabel lblPlace;
-    JLabel lblStartTime;
-    JLabel lblEndTime;
-    JButton btnAccept;
-    JButton btnExit;
-    JButton btnDecline;
-    JLabel lblGetFrom;
-    JLabel lblGetName;
-    JLabel lblGetPlace;
-    JLabel lblGetStartTime;
-    JLabel lblGetEndTime;
+    public JLabel lblInvitation;
+    public JLabel lblFrom;
+    public JLabel lblName;
+    public JLabel lblPlace;
+    public JLabel lblStartTime;
+    public JLabel lblEndTime;
+    public JButton btnAccept;
+    public JButton btnExit;
+    public JButton btnDecline;
+    public JLabel lblGetFrom;
+    public JLabel lblGetName;
+    public JLabel lblGetPlace;
+    public JLabel lblGetStartTime;
+    public JLabel lblGetEndTime;
 
     private EinladungEvent einladungEvent;
     private Termin termin;
@@ -49,8 +49,7 @@ public class Invitation {
         frame.setBounds(800, 500, 800, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
-
-        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
 
         lblFrom = new JLabel("From: ");
         lblFrom.setBounds(150, 120, 100, 30);

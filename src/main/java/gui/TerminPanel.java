@@ -1,12 +1,9 @@
 package gui;
 
-import client.TerminHandle;
-import data.Nutzer;
 import data.Termin;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +11,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * The <code>AppointmentPanel</code> ensures the panel of the <code>AppointmentFrame</code>.
- * Its shows the option to add an appointment and is placed within <code>AppointmentFrame</code>.
- * @author Bram de Hart
+ * The <code>TerminPanel</code> ensures the panel of the <code>TerminFrame</code>.
+ * Its shows the option to add an appointment and is placed within <code>TerminFrame</code>.
  * @version 1.0
  * @see TerminFrame
  */
@@ -24,7 +20,7 @@ public class TerminPanel extends JPanel {
     private Date date;
     private JFrame appointmentFrame;
     private CalendarPanel calendarPanel;
-    private JTextField nameTextField, placeTextField, startTimeTextField, endTimeTextField, inviteTextField;
+    private JTextField nameTextField, placeTextField, startTimeTextField, endTimeTextField;
 
     /**
      * Constructor. Sets the global variables and calls the draw method.
@@ -61,8 +57,6 @@ public class TerminPanel extends JPanel {
             add(l);
             if (i+1 < numPairs) {
                 add(textFieldList.get(i));
-            //} else if (i == (numPairs-1)) {
-                //add(inviteComboBox);
             } else {
                 add(saveButton);
             }
@@ -89,7 +83,6 @@ public class TerminPanel extends JPanel {
         textFieldList.add(placeTextField = new JTextField());
         textFieldList.add(startTimeTextField = new JTextField(dayString + " 12:00:00"));
         textFieldList.add(endTimeTextField = new JTextField(dayString + " 13:00:00"));
-        //textFieldList.add(inviteTextField = new JTextField());
 
         return textFieldList;
     }
@@ -172,7 +165,7 @@ public class TerminPanel extends JPanel {
                 appointmentFrame.setVisible(false);
                 appointmentFrame.dispose();
 
-                // repaint panels and show succes message
+                // repaint panels and show success message
                 calendarPanel.monthPanel.redrawMonthPanel();
                 calendarPanel.mainPanel.dayDetailPanel.redrawDayDetailPanel();
                 showSuccesMessage(name);

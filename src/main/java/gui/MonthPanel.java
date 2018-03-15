@@ -8,7 +8,6 @@ import java.util.ArrayList;
 /**
  * The <code>MonthPanel</code> ensures the month user-interface panel.
  * It is placed within <code>CalendarPanel</code>.
- * @author Bram de Hart
  * @version 1.0
  * @see CalendarPanel
  */

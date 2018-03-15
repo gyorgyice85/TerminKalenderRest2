@@ -6,9 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
+
 
 public class Login {
 
@@ -16,11 +15,7 @@ public class Login {
     private JFrame frame;
 
     private JButton btnRegistration;
-    private JButton btnExit;
     private JLabel lblLoginSystems;
-
-    static Color accent = new Color(0, 188, 212);
-    static Color bg = new Color(96, 125, 139);
 
     private ClientSession cs;
 
@@ -38,18 +33,6 @@ public class Login {
                 }
             }
         });
-    }
-
-    public static Font loadFont(String name, float size){
-        InputStream is = Login.class.getResourceAsStream("/resources/"+name);
-        Font title = null;
-        try {
-            title = Font.createFont(Font.TRUETYPE_FONT, is);
-            title = title.deriveFont(size);
-        } catch (FontFormatException ex) {ex.printStackTrace();
-        }
-        catch (IOException ex){ex.printStackTrace();}
-        return title;
     }
 
     /**
@@ -73,6 +56,7 @@ public class Login {
         frame.setBounds(800, 500, 800, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(null);
+        frame.setLocationRelativeTo(null);
 
         JLabel lblUsername = new JLabel("Please select your name to login: ");
         lblUsername.setBounds(270, 105, 400, 80);
@@ -116,6 +100,7 @@ public class Login {
             public void actionPerformed(ActionEvent arg0) {
                 Registration window = new Registration(cs);
                 window.frame.setVisible(true);
+                frame.dispose();
             }
         });
 

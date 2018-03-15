@@ -14,7 +14,6 @@ import java.util.List;
 /**
  * The <code>DayDetailPanel</code> ensures the panel in which the details (appointments) of the active day will be placed.
  * It is placed within <code>MainPanel</code>.
- * @author Bram de Hart
  * @version 1.0
  * @see MainPanel
  */
@@ -139,9 +138,9 @@ public class DayDetailPanel extends JPanel {
                 // components
                 Border spacingBorder = new EmptyBorder(0, 6, 0, 6);
                 String startTime = String.valueOf(appointment.getVon());
-                startTime = startTime.substring(0, startTime.length() - 3);
+                startTime = startTime.substring(0, startTime.length()-5);
                 String endTime = String.valueOf(appointment.getBis());
-                endTime = endTime.substring(0, endTime.length() - 3);
+                endTime = endTime.substring(0, endTime.length()-5);
                 JLabel time = new JLabel(startTime+" - "+endTime);
                 time.setBorder(spacingBorder);
 
@@ -223,7 +222,7 @@ public class DayDetailPanel extends JPanel {
     }
 
     /**
-     * Inner class. Triggers an actionlistener when a delete button is clicked.
+     * Inner class. Triggers an actionlistener when a invite button is clicked.
      */
     class InviteHandler implements ActionListener {
 

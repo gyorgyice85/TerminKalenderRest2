@@ -2,16 +2,12 @@ package gui;
 
 import calendar.CalendarData;
 import client.EventsHandle;
-import client.TerminHandle;
 
 import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import java.awt.*;
 
 /**
  * The <code>MainFrame</code> ensures the main window of the calendar application.
- * It is called by <code>edu.avans.library.main.Main</code>.
  * @version 1.0
  */
 public class MainFrame extends JFrame {

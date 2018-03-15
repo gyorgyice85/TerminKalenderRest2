@@ -1,7 +1,6 @@
 package gui;
 
 import data.Termin;
-import client.TerminHandle;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -11,12 +10,9 @@ import java.awt.event.ActionListener;
 import java.util.Date;
 import java.util.List;
 
-import static java.awt.Color.BLACK;
-
 /**
  * The <code>DayPanel</code> ensures the user-interface panel for <b>each</b> day.
  * It is placed within <code>MonthPanel</code>.
- * @author Bram de Hart
  * @version 1.0
  * @see MonthPanel
  */
@@ -64,7 +60,7 @@ public class DayPanel extends JPanel {
 
         JPanel dayTopPanel = new JPanel();
         dayTopPanel.setBackground(new Color(0,0,0,0));
-        dayTopPanel.setLayout(new GridLayout(1,2));
+        dayTopPanel.setLayout(new GridLayout(0,2));
 
         // week number
         if (index % 7 == 1) {
@@ -82,35 +78,35 @@ public class DayPanel extends JPanel {
 
         JPanel dayMiddlePanel = new JPanel();
         dayMiddlePanel.setBackground(new Color(0,0,0,0));
-        dayMiddlePanel.setLayout(new GridLayout(2,1));
+        dayMiddlePanel.setLayout(new GridLayout(1,3));
 
 
-        addAppointmentsButton = new JButton("Add");
+        addAppointmentsButton = new JButton("+");
         dayMiddlePanel.add(addAppointmentsButton);
         addAppointmentsButton.addActionListener(new addAppointmentsButtonHandler());
+        dayMiddlePanel.add(new JLabel(""));
+        dayMiddlePanel.add(new JLabel(""));
 
         JPanel dayBottomPanel = new JPanel();
         dayBottomPanel.setBackground(new Color(0,0,0,0));
-        dayBottomPanel.setLayout(new GridLayout(3,2));
+        dayBottomPanel.setLayout(new GridLayout(1,3));
 
-        viewAppointmentsButton = new JButton("View");
-        viewAppointmentsButton.setSize(2,2);
-        viewAppointmentsButton.setMaximumSize(getSize());
-        //viewAppointmentsButton.setMargin(new java.awt.Insets(1,2,1,2));
-        viewAppointmentsButton.setHorizontalAlignment(SwingConstants.LEFT);
+        viewAppointmentsButton = new JButton(">");
         dayBottomPanel.add(viewAppointmentsButton);
         viewAppointmentsButton.addActionListener(new viewAppointmentsButtonHandler());
 
         if (appointmentsCount > 0) {
             JLabel appointmentsCountLabel = new JLabel(appointmentsCount.toString());
-            appointmentsCountLabel.setFont(new Font("Arial", Font.BOLD, 12));
-            appointmentsCountLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            appointmentsCountLabel.setForeground(Color.RED);
+            appointmentsCountLabel.setFont(new Font("Arial", Font.BOLD, 16));
+            appointmentsCountLabel.setHorizontalAlignment(SwingConstants.CENTER);
+            appointmentsCountLabel.setForeground(Color.WHITE);
             appointmentsCountLabel.setBackground(new Color(0, 0, 0, 50));
             appointmentsCountLabel.setOpaque(true);
+            dayBottomPanel.add(new JLabel(""));
             dayBottomPanel.add(appointmentsCountLabel);
         }
         else {
+            dayBottomPanel.add(new JLabel(""));
             dayBottomPanel.add(new JLabel(""));
         }
 
@@ -128,9 +124,9 @@ public class DayPanel extends JPanel {
      * @return the color code
      */
     private String getAppointmentsBackground(Integer appointmentsCount) {
-        String backgroundHash = "#FFDAB9";
+        String backgroundHash = "#FA8072";
         if (appointmentsCount > 5) {
-            backgroundHash = "#FF6347";
+            backgroundHash = "#F08080";
             if (appointmentsCount > 10) {
                 backgroundHash = "#CD5C5C";
             }
@@ -190,7 +186,7 @@ public class DayPanel extends JPanel {
     private JLabel getStyledDayNumber(Integer dayNumber) {
         JLabel dayLabel = new JLabel(this.day.toString());
         dayLabel.setBorder(new EmptyBorder(10, 10, 10, 10));
-        dayLabel.setFont(new Font("Arial", Font.PLAIN, 16));
+        dayLabel.setFont(new Font("Arial", Font.PLAIN, 20));
         dayLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 
         // days that aren't in the active month

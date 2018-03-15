@@ -11,7 +11,6 @@ import java.awt.event.ComponentEvent;
  * The <code>MainPanel</code> ensures the main panel of the calendar application.
  * It contains the toppanel and <code>CalendarPanel</code>.
  * It is placed within <code>MainFrame</code>.
- * @author Bram de Hart
  * @version 1.0
  * @see CalendarPanel
  * @see MainFrame
@@ -19,7 +18,7 @@ import java.awt.event.ComponentEvent;
 public class MainPanel extends JPanel {
     private static Integer TOP_PANEL_HEIGHT = 75;
     private Integer topPanelWidth;
-    private JButton invitationButton, prevMonthButton, nextMonthButton, currentMonthButton;
+    private JButton prevMonthButton, nextMonthButton, currentMonthButton;
     private JPanel topPanel, navigationButtonPanel; // for now private
     public CalendarPanel calendarPanel;
     public DayDetailPanel dayDetailPanel;
@@ -61,8 +60,6 @@ public class MainPanel extends JPanel {
         topPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 0, 1, Color.decode("#E2E2E2")));
 
         // buttons
-        invitationButton = new JButton("Invitation");
-        invitationButton.addActionListener(new invitationButtonHandler());
         prevMonthButton = new JButton("<");
         prevMonthButton.addActionListener(new prevMonthButtonHandler());
         currentMonthButton = new JButton("Today");
@@ -108,7 +105,6 @@ public class MainPanel extends JPanel {
         navigationButtonPanel.add(prevMonthButton);
         navigationButtonPanel.add(currentMonthButton);
         navigationButtonPanel.add(nextMonthButton);
-        //navigationButtonPanel.add(invitationButton); // NOTE invitationButton sollte bei einem Bestimmten Termin sein, statt hier
         topPanel.add(navigationButtonPanel);
 
         topPanel.add(sundayLabel);
@@ -219,12 +215,6 @@ public class MainPanel extends JPanel {
         }
     }
 
-    class invitationButtonHandler implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            Invitation window = new Invitation(null, null);
-            window.frame.setVisible(true);
-        }
-    }
     /**
      * Inner class. Triggers an actionlistener when previous button is clicked.
      */

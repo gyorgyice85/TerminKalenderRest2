@@ -3,9 +3,8 @@ package gui;
 import javax.swing.*;
 
 /**
- * The <code>AppointmentFrame</code> ensures the window of the popup used to add an appointment.
+ * The <code>TerminFrame</code> ensures the window of the popup used to add an appointment.
  * It is called by <code>DayPanel</code>.
- * @author Bram de Hart
  * @version 1.0
  * @see DayPanel
  */

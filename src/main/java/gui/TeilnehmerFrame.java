@@ -5,15 +5,14 @@ import data.Termin;
 import javax.swing.*;
 
 /**
- * The <code>AppointmentFrame</code> ensures the window of the popup used to add an appointment.
+ * The <code>TeilehmerFrame</code> ensures the window of the popup used to invite another user.
  * It is called by <code>DayPanel</code>.
- * @author Bram de Hart
  * @version 1.0
  * @see DayPanel
  */
 public class TeilnehmerFrame extends JFrame {
     public Integer frameWidth = 292, frameHeight = 352;
-    private TeilnehmerPanel appointmentPanel; // for now private
+    private TeilnehmerPanel teilnehmerPanel; // for now private
     private ClientSession cs;
     private Termin termin;
 
@@ -36,11 +35,11 @@ public class TeilnehmerFrame extends JFrame {
         setSize(frameWidth,frameHeight);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocation(offsetX, offsetY);
-        //setAlwaysOnTop(true);
+        setLocationRelativeTo(null);
 
         // add content to frame
-        appointmentPanel = new TeilnehmerPanel(termin, cs, this);
-        setContentPane(appointmentPanel);
+        teilnehmerPanel = new TeilnehmerPanel(termin, cs, this);
+        setContentPane(teilnehmerPanel);
         pack();
         setVisible(true);
     }

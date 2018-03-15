@@ -1,15 +1,11 @@
 package gui;
 
 import data.Nutzer;
-import client.NutzerHandle;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.InputStream;
-
 
 public class Registration {
 
@@ -17,9 +13,6 @@ public class Registration {
         static JTextField textField_1;
         static JTextField textField_2;
         private static JLabel lblRegistrationSystems;
-
-        static Color accent = new Color(0, 188, 212);
-        static Color bg = new Color(96, 125, 139);
 
     private ClientSession cs;
 
@@ -39,17 +32,6 @@ public class Registration {
             });
         }
 
-    public static Font loadFont(String name, float size){
-        InputStream is = Registration.class.getResourceAsStream("/resources/"+name);
-        Font title = null;
-        try {
-            title = Font.createFont(Font.TRUETYPE_FONT, is);
-            title = title.deriveFont(size);
-        } catch (FontFormatException ex) {ex.printStackTrace();
-        }
-        catch (IOException ex){ex.printStackTrace();}
-        return title;
-    }
 
         /**
          * Create the application.
@@ -67,9 +49,7 @@ public class Registration {
             frame.setBounds(800, 500, 800, 500);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.getContentPane().setLayout(null);
-
-
-            frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            frame.setLocationRelativeTo(null);
 
             JLabel lblNachname = new JLabel("Last name:");
             lblNachname.setBounds(150, 120, 100, 30);
@@ -95,8 +75,6 @@ public class Registration {
             frame.getContentPane().add(btnClear);
 
             JButton btnSubmit = new JButton("Submit");
-            //btnSubmit.setBackground(Color.BLACK);
-            //btnSubmit.setForeground(Color.GRAY);
             btnSubmit.setBounds(250, 350, 89, 23);
             frame.getContentPane().add(btnSubmit);
 

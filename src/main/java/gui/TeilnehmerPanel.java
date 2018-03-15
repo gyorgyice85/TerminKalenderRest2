@@ -7,21 +7,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
- * The <code>AppointmentPanel</code> ensures the panel of the <code>AppointmentFrame</code>.
- * Its shows the option to add an appointment and is placed within <code>AppointmentFrame</code>.
- * @author Bram de Hart
+ * The <code>TeilnehmerPanel</code> ensures the panel of the <code>TeilnehmerFrame</code>.
+ * Its shows the option to add a participant and is placed within <code>TeilnehmerFrame</code>.
  * @version 1.0
  * @see TerminFrame
  */
 public class TeilnehmerPanel extends JPanel {
 
-    private JFrame appointmentFrame;
+    private JFrame teilnehmerFrame;
     private ClientSession cs;
     private JComboBox<Nutzer> inviteComboBox;
 
@@ -32,32 +28,32 @@ public class TeilnehmerPanel extends JPanel {
      * @param termin The appointment
      * @param cs the client session
      */
-    public TeilnehmerPanel(Termin termin, ClientSession cs, JFrame appointmentFrame) {
+    public TeilnehmerPanel(Termin termin, ClientSession cs, JFrame teilnehmerFrame) {
         super(new SpringLayout());
 
         this.termin = termin;
         this.cs = cs;
-        this.appointmentFrame = appointmentFrame;
+        this.teilnehmerFrame = teilnehmerFrame;
 
-        drawAppointmentPanel();
+        drawTeilnehmerPanel();
     }
 
     /**
      * Redraws the day detail-panel
      */
-    public void redrawAppointmentPanel() {
+    public void redrawTeilnehmerPanel() {
         removeAll();
-        drawAppointmentPanel();
+        drawTeilnehmerPanel();
         validate();
         repaint();
     }
 
     /**
-     * Draws the appointment panel.
+     * Draws the Teilnehmer panel.
      */
-    public void drawAppointmentPanel() {
+    public void drawTeilnehmerPanel() {
 
-        JButton einladenButton = new JButton("Einladen");
+        JButton einladenButton = new JButton("Invite");
         einladenButton.setPreferredSize(new Dimension(200,40));
         einladenButton.addActionListener(new EinladenHandler(cs));
 
@@ -74,10 +70,10 @@ public class TeilnehmerPanel extends JPanel {
             inviteComboBox.addItem(nutzer);
         }
 
-        this.add(new JLabel("Termin:"));
+        this.add(new JLabel("Appointment:"));
         this.add(new JLabel(termin.toPrettyString()));
 
-        this.add(new JLabel("Teilnehmer:"));
+        this.add(new JLabel("Participants:"));
         JLabel teilnehmerLabel = new JLabel();
         StringBuilder teilnehmerText = new StringBuilder();
         for (Nutzer nutzer : teilnehmer) {
@@ -86,16 +82,16 @@ public class TeilnehmerPanel extends JPanel {
         teilnehmerLabel.setText(teilnehmerText.toString());
         this.add(teilnehmerLabel);
 
-        this.add(new JLabel("Eingeladene:"));
+        this.add(new JLabel("Invited:"));
         JLabel einladLabel = new JLabel();
         StringBuilder einladText = new StringBuilder();
         for (Nutzer nutzer : eingeladene) {
-            einladText.append(nutzer.toString() + "\t");
+            einladText.append(nutzer.toString() + ", ");
         }
         einladLabel.setText(einladText.toString());
         this.add(einladLabel);
 
-        this.add(new JLabel("Einladen:"));
+        this.add(new JLabel("Inivite:"));
         this.add(inviteComboBox);
 
         this.add(new JLabel(""));
@@ -119,7 +115,7 @@ public class TeilnehmerPanel extends JPanel {
     }
 
     /**
-     * Inner class. Triggers an actionlistener when the <code>addAppointmentButton</code> is clicked.
+     * Inner class. Triggers an actionlistener when the <code>einladenButton</code> is clicked.
      */
     class EinladenHandler implements ActionListener {
 
@@ -130,7 +126,7 @@ public class TeilnehmerPanel extends JPanel {
         }
 
         /**
-         * Opens new frame where a new appointment can be added.
+         * Opens new frame where a new participant can be added.
          *
          * @param e
          */
@@ -138,7 +134,7 @@ public class TeilnehmerPanel extends JPanel {
             Nutzer wen = (Nutzer)inviteComboBox.getSelectedItem();
             cs.terminHandle.einladen(termin, cs.nutzer, wen);
             showSuccesMessage("");
-            redrawAppointmentPanel();
+            redrawTeilnehmerPanel();
         }
     }
 }
