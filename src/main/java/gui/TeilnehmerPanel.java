@@ -136,8 +136,10 @@ public class TeilnehmerPanel extends JPanel {
          */
         public void actionPerformed(ActionEvent e) {
             Nutzer wen = (Nutzer)inviteComboBox.getSelectedItem();
-            cs.terminHandle.einladen(termin, cs.nutzer, wen);
-            showSuccesMessage("");
+            if (wen != null) {
+                cs.terminHandle.einladen(termin, cs.nutzer, wen);
+                showSuccesMessage("");
+            }
             redrawTeilnehmerPanel();
         }
     }
