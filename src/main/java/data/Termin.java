@@ -53,10 +53,10 @@ public class Termin {
     }
 
     public String toPrettyString() {
-        return "Name: '" + beschreibung + '\'' +
-                ", Place: '" + ort + '\'' +
-                ", Start Time: " + von +
-                ", End Time: " + bis;
+        return "Name: '" + beschreibung + "\' \n" +
+                "Place: '" + ort + "\' \n" +
+                "Start Time: " + von + "\n" +
+                "End Time: " + bis;
     }
 
     /**

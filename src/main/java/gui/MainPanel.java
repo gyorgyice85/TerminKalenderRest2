@@ -132,7 +132,7 @@ public class MainPanel extends JPanel {
      * Updates the top-panel dimensions and sets it's new bounds.
      */
     private void resizeTopPanel() {
-        topPanelWidth = (int) (mainFrame.getContentPane().getWidth() * 0.8);
+        topPanelWidth = (int) (mainFrame.getContentPane().getWidth() * 0.75);
         setTopPanelBounds();
     }
 

@@ -50,7 +50,7 @@ public class EventsHandle {
                             System.out.println("Einladung accepted: " + termin);
                             JOptionPane.showMessageDialog(null,
                                     "Your invitation has been accepted. \n \n" +
-                                    "Termin: " + termin.toPrettyString() + "\n " +
+                                    "Termin: \n" + termin.toPrettyString() + "\n\n" +
                                     "Eingeladene: " + wen.toString(),
                                     "Invitation accepted", JOptionPane.PLAIN_MESSAGE);
                             break;
@@ -58,7 +58,7 @@ public class EventsHandle {
                             System.out.println("Einladung rejected: " + termin);
                             JOptionPane.showMessageDialog(null,
                                     "Your invitation has been rejected. \n \n" +
-                                            "Termin: " + termin.toPrettyString() + "\n " +
+                                            "Termin: \n" + termin.toPrettyString() + "\n\n" +
                                             "Eingeladene: " + wen.toString(),
                                     "Invitation rejected", JOptionPane.PLAIN_MESSAGE);
                             break;
@@ -68,7 +68,7 @@ public class EventsHandle {
         sseEventSource.open();
 
         // do other stuff, block here and continue when done
-        Thread.sleep(20 * 1000);
+        Thread.sleep(2 * 1000);
 
         //sseEventSource.close();
     }

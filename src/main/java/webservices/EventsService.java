@@ -55,6 +55,8 @@ public class EventsService {
                                 .mediaType(MediaType.APPLICATION_XML_TYPE)
                                 .build();
                         eventSink.send(event);
+                    } else {
+                        einladungMessageQueue.put(message);
                     }
                 }
 

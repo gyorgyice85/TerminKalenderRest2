@@ -77,7 +77,7 @@ public class TeilnehmerPanel extends JPanel {
         JLabel teilnehmerLabel = new JLabel();
         StringBuilder teilnehmerText = new StringBuilder();
         for (Nutzer nutzer : teilnehmer) {
-            teilnehmerText.append(nutzer.toString() + "\t");
+            teilnehmerText.append(nutzer.toString() + ", ");
         }
         teilnehmerLabel.setText(teilnehmerText.toString());
         this.add(teilnehmerLabel);

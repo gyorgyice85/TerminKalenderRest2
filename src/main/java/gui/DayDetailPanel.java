@@ -68,7 +68,7 @@ public class DayDetailPanel extends JPanel {
      * Sets the day-detail panel's dimensions.
      */
     private void setDayDetailPanelDimensions() {
-        dayDetailPanelWidth = (int) (mainPanel.mainFrame.getContentPane().getWidth() * 0.2);
+        dayDetailPanelWidth = (int) (mainPanel.mainFrame.getContentPane().getWidth() * 0.25);
         dayDetailPanelHeight = mainPanel.mainFrame.getContentPane().getHeight();
     }
 
@@ -207,7 +207,7 @@ public class DayDetailPanel extends JPanel {
 
             int dialogResult = JOptionPane.showConfirmDialog(
                     null,
-                    "Are you sure you want to delete the event \"" + termin.toPrettyString() + "\"?",
+                    "Are you sure you want to delete the following event? \n\n" + termin.toPrettyString(),
                     "Delete event",
                     JOptionPane.YES_NO_OPTION);
 
