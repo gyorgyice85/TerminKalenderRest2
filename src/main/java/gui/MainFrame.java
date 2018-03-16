@@ -1,3 +1,7 @@
+/**
+ * Eridho Buffery Rollian
+ *
+ */
 package gui;
 
 import calendar.CalendarData;

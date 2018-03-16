@@ -1,5 +1,9 @@
 package gui;
 
+/**
+ * Eridho Buffery Rollian
+ *
+ */
 import data.Nutzer;
 
 import javax.swing.*;

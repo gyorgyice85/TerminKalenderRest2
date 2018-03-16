@@ -1,3 +1,6 @@
+/**
+ *  Györgyi Palatinus
+ */
 package webservices;
 
 import javax.ws.rs.GET;
@@ -19,7 +22,6 @@ public class EventsService {
 
     // Temporary store for messages when arrived
     static BlockingQueue<EinladungEvent> einladungMessageQueue = new LinkedBlockingQueue<EinladungEvent>();
-
 
     @GET
     @Path("{nutzerID}")
@@ -63,7 +65,6 @@ public class EventsService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }).start();
     }
 }

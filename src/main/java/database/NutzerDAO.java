@@ -1,3 +1,7 @@
+/**
+ *  Annisa Yustina Puspakemala
+ */
+
 package database;
 
 import data.Nutzer;

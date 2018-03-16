@@ -1,3 +1,8 @@
+/**
+ *  Nexhmije Nina
+ *
+ */
+
 package database;
 
 import data.Nutzer;

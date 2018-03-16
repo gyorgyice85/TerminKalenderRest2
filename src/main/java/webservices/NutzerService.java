@@ -1,5 +1,8 @@
 package webservices;
 
+/**
+ *  Györgyi Palatinus
+ */
 import database.EinladungDAO;
 import database.NutzerDAO;
 import database.TeilnehmerDAO;

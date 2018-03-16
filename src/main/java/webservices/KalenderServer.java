@@ -1,3 +1,6 @@
+/**
+ *  Györgyi Palatinus
+ */
 package webservices;
 
 import org.glassfish.grizzly.http.server.HttpServer;

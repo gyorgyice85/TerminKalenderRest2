@@ -1,3 +1,7 @@
+/**
+ * Eridho Buffery Rollian
+ *
+ */
 package database;
 
 import data.Nutzer;

@@ -1,3 +1,6 @@
+/**
+ *  Györgyi Palatinus
+ */
 package database;
 
 import data.Nutzer;

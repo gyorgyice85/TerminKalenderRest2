@@ -1,3 +1,6 @@
+/**
+ *  Annisa Yustina Puspakemala
+ */
 package data;
 
 import database.EinladungDAO;

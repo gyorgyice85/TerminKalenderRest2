@@ -1,3 +1,6 @@
+/**
+ *  Györgyi Palatinus
+ */
 package webservices;
 
 import javax.xml.bind.annotation.XmlRootElement;

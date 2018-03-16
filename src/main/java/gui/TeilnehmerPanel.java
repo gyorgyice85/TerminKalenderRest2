@@ -1,3 +1,7 @@
+/**
+ *  Nexhmije Nina
+ *
+ */
 package gui;
 
 import data.Nutzer;
