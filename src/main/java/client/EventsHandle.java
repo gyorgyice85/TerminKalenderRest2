@@ -18,6 +18,7 @@ import java.util.function.Consumer;
 public class EventsHandle {
 
     private ClientSession cs;
+    private SseEventSource sseEventSource;
 
     public EventsHandle(ClientSession cs) throws InterruptedException {
 
@@ -28,7 +29,7 @@ public class EventsHandle {
         WebTarget target = client.target(KalenderServer.BASE_URI)
                 .path("events")
                 .path(String.valueOf(cs.nutzerID));
-        SseEventSource sseEventSource = SseEventSource.target(target).build();
+        sseEventSource = SseEventSource.target(target).build();
 
         // register event handler
         sseEventSource.register(
@@ -69,7 +70,9 @@ public class EventsHandle {
 
         // do other stuff, block here and continue when done
         Thread.sleep(2 * 1000);
+    }
 
-        //sseEventSource.close();
+    public void close() {
+        sseEventSource.close();
     }
 }

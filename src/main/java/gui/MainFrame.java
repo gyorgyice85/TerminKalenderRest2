@@ -37,8 +37,16 @@ public class MainFrame extends JFrame {
         setTitle("Calendar of " + cs.nutzer.toString());
         //setSize(frameWidth,frameHeight);
         setSize(1300,800);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(1280, 800));
+
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                eventsHandle.close();
+                System.exit(0);
+            }
+        });
 
         // add content to frame
         mainPanel = new MainPanel(MainFrame.this);

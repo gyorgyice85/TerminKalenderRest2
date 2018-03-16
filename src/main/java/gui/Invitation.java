@@ -116,6 +116,7 @@ public class Invitation {
         btnAccept.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 cs.terminHandle.annehmen(termin, wen);
+                frame.dispose();
             }
         });
 
